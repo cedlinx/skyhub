@@ -20,6 +20,7 @@ Route::group([
         Route::post('/add', 'AssetController@add_asset')->middleware('log.route');
         Route::post('/generate_company_codes', 'AssetController@generate_company_codes')->middleware('log.route');
         Route::get('/get_company_codes/{id}', 'AssetController@get_company_codes');
+        Route::post('/upload_bulk_assets', 'AssetController@upload_bulk_assets')->middleware('log.route');
     });
 
     Route::prefix('email')->group(function () {
