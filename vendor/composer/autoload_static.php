@@ -486,6 +486,7 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'App\\Mail\\MyTestMail' => __DIR__ . '/../..' . '/app/Mail/MyTestMail.php',
         'App\\Models\\Asset' => __DIR__ . '/../..' . '/app/Models/Asset.php',
         'App\\Models\\CompanyCode' => __DIR__ . '/../..' . '/app/Models/CompanyCode.php',
+        'App\\Models\\LogRequest' => __DIR__ . '/../..' . '/app/Models/LogRequest.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
