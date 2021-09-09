@@ -46,6 +46,7 @@ return array(
     'App\\Mail\\MyTestMail' => $baseDir . '/app/Mail/MyTestMail.php',
     'App\\Models\\Asset' => $baseDir . '/app/Models/Asset.php',
     'App\\Models\\CompanyCode' => $baseDir . '/app/Models/CompanyCode.php',
+    'App\\Models\\LogRequest' => $baseDir . '/app/Models/LogRequest.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',

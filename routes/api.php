@@ -30,4 +30,8 @@ Route::group([
     Route::prefix('sms')->group(function () {
         Route::post('/send_sms', 'SmsServiceController@send_user_sms');
     });
+
+    Route::prefix('payment')->group(function () {
+        Route::post('/save_payment', 'PaymentController@save_payment')->middleware('log.route');
+    });
 });
