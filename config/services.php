@@ -8,7 +8,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | This file is for storing the credentials for third party services such
-    | as Mailgun, SparkPost and others. This file provides a sane default
+    | as Mailgun, Postmark, AWS and more. This file provides the de facto
     | location for this type of information, allowing packages to have
     | a conventional file to locate the various service credentials.
     |
@@ -30,8 +30,32 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'sparkpost' => [
-        'secret' => env('SPARKPOST_SECRET'),
+    'github' => [
+        'client_id' => env('GH_ID'),
+        'client_secret' => env('GH_SECRET'),
+        'redirect' => env('APP_URL') . '/gosocial/github/callback',
+        //'redirect' => env('APP_URL') . '/oauth/github/callback',
+    ],
+
+    'facebook' => [
+        'client_id' => env('FB_ID'),
+        'client_secret' => env('FB_SECRET'),
+        'redirect' => env('APP_URL') . '/gosocial/facebook/callback',
+                //'redirect' => env('APP_URL') . '/oauth/github/callback',
+    ],
+
+    'twitter' => [
+        'client_id' => env('TW_ID'),
+        'client_secret' => env('TW_SECRET'),
+        'redirect' => env('APP_URL') . '/gosocial/twitter/callback',
+                //'redirect' => env('APP_URL') . '/oauth/github/callback',
+    ],
+
+    'google' => [
+        'client_id' => env('GG_ID'),
+        'client_secret' => env('GG_SECRET'),
+        'redirect' => env('APP_URL') . '/gosocial/callback/google',
+                //'redirect' => env('APP_URL') . '/oauth/github/callback',
     ],
 
 ];
