@@ -6,7 +6,11 @@
 
 require('./bootstrap');
 
+<<<<<<< HEAD
 window.Vue = require('vue').default;
+=======
+window.Vue = require('vue');
+>>>>>>> 47aa9433f9855cae6ba9aa220237884821178799
 
 /**
  * The following block of code may be used to automatically register your
@@ -16,8 +20,13 @@ window.Vue = require('vue').default;
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
+<<<<<<< HEAD
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+=======
+// const files = require.context('./', true, /\.vue$/i);
+// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
+>>>>>>> 47aa9433f9855cae6ba9aa220237884821178799
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
