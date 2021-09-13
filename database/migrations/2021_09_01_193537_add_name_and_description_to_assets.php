@@ -15,7 +15,7 @@ class AddNameAndDescriptionToAssets extends Migration
     {
         Schema::table('assets', function (Blueprint $table) {
             $table->string('name');
-            $table->text('desctiption');
+            $table->text('description');
         });
     }
 
@@ -28,7 +28,7 @@ class AddNameAndDescriptionToAssets extends Migration
     {
         Schema::table('assets', function (Blueprint $table) {
             $table->dropColumn('name');
-            $table->dropColumn('desctiption');
+            $table->dropColumn('description');
         });
     }
 }
