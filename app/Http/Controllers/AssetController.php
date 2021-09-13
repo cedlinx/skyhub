@@ -24,7 +24,9 @@ class AssetController extends Controller
         $data = [
             'name' => $request->name,
             'description' => $request->description,
-            'skydahid' => $this->generate_random_string()
+            'skydahid' => $this->generate_random_string(),
+            'user_id' => $request->user_id,
+            'type_id' => $request->type_id
         ];
 
         $asset = Asset::create($data);
