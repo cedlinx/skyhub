@@ -4,12 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Asset extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+    
+    protected $dates = ['deleted_at'];
     protected $fillable = [
-        'name', 'description', 'skydahid', 'assetid', 'type_id', 'user_id'
+        'name', 'description', 'skydahid', 'assetid', 'category_id', 'user_id'
     ];
     
     public function user()
@@ -19,10 +22,16 @@ class Asset extends Model
         ]);
     }
 
-    public function type()
+    public function category()
     {
-        return $this->belongsTo(Type::class)->withDefault([
-            'type' => 'Unknown',
+        return $this->belongsTo(Category::class)->withDefault([
+            'category' => 'Unknown',
         ]);
     }
+
+    public function recoveries()
+    {
+        return $this->hasMany(Recovery::class);
+    }
+
 }

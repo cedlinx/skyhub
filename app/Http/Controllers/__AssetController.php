@@ -53,15 +53,52 @@ class AssetController extends Controller
         ], 200);
     }
 
-    public function update(Request $request)
+    public function store(Request $request)
     {
-        $id = $request->id;
+        //MERGE this with add_asset below from Kenny
+        //Then inplement the blockchain
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'assetid' => 'nullable|string|max:255',
+            'user_id' => 'required|integer',
+            'category_id' => 'nullable|integer',
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['errors'=>$validator->errors()->all()], 412);
+        }
+ 
+        $asset = new Asset();
+        $asset->name = $request->name;
+        $asset->description = $request->description;
+        $asset->skydahid = $request->xyz;   /*GET THIS FROM CODE GENERATION*/ ;
+        $asset->assetid = $request->assetid;
+        $asset->user_id = $request->user_id;
+        $asset->category_id = $request->category_id;
+ 
+        if (auth()->user()->assets()->save($asset))
+            return response()->json([
+                'success' => true,
+                'message' => 'Congrats! Your asset is now protected by Skydah.',
+                'data' => $asset->toArray()
+            ]);
+        else
+            return response()->json([
+                'success' => false,
+                'message' => 'Asset could not be added! Please, try again.'
+            ], 500);
+    }
+
+    public function update(Request $request, $id)
+    {
         $asset = auth()->user()->assets()->find($id);
  
         if (!$asset) {
             return response()->json([
                 'success' => false,
-                'message' => 'Sorry! Asset could not be found!'
+                'message' => 'Asset could not be found!'
             ], 400);
         }
  
@@ -69,9 +106,8 @@ class AssetController extends Controller
  
         if ($updated)
             return response()->json([
-                'success' => true,
-                'message' => 'Asset details have been updated.'
-            ], 200);
+                'success' => true
+            ]);
         else
             return response()->json([
                 'success' => false,
@@ -79,9 +115,8 @@ class AssetController extends Controller
             ], 500);
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $id = $request->id;
         $asset = auth()->user()->assets()->find($id);
  
         if (!$asset) {
@@ -305,18 +340,6 @@ class AssetController extends Controller
   
     }
     
-    public function transferAsset(Request $request)
-    {
-        //Upon successful transfer, apply softdelete on the previous owner
-
-    }
-
-    public function flagAssetAsMissing(Request $request)
-    {
-        //Display details of "recoveries" on reporting user's dashboard
-        
-    }
-
 }
 
         //Use these where ONLY authenticated users are allowed to view asset

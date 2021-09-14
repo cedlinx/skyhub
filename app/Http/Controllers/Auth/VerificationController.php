@@ -60,7 +60,7 @@ class VerificationController extends Controller
             ];
             $code = 401;
     
-            return response($response, $code);
+            return response()->json($response, $code);
         }
 
         if (!$user->hasVerifiedEmail()) {
@@ -89,10 +89,10 @@ class VerificationController extends Controller
                     'id' => $user->id
                 ]
             ];
-            $code = 200;
+            $code = 400;
         }
     
-        return response($response, $code);
+        return response()->json($response, $code);
     }
     
     public function resend(Request $request) {
@@ -103,7 +103,7 @@ class VerificationController extends Controller
 
         if ($validator->fails())
         {
-            return response(['errors'=>$validator->errors()->all()], 422);
+            return response()->json(['errors'=>$validator->errors()->all()], 412);
         }
 
         $email = $request->only('email');

@@ -6,12 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Support\Facades\Validator;
-//use Illuminate\Support\Facades\DB;
 use App\Models\User;    //check?
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
-//use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 
 //for TESTING EMAIL PDF SENDING STANDALONE
@@ -55,7 +53,7 @@ class ForgotPasswordController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response(['errors'=>$validator->errors()->all()], 422);
+            return response()->json(['errors'=>$validator->errors()->all()], 422);
         }
 
         $response =  Password::sendResetLink($input);
@@ -70,7 +68,7 @@ class ForgotPasswordController extends Controller
         }
 
         $response = ['message' => $message];
-        return response($response, $code);
+        return response()->json($response, $code);
     }
 
 }

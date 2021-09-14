@@ -76,6 +76,18 @@ class User extends Authenticatable implements CanResetPassword, mustVerify
     {
         return $this->hasMany(Asset::class);
     }
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class)->withDefault([
+            'type' => 'Unknown',
+        ]);
+    }
+
+    public function recoveries()
+    {
+        return $this->hasMany(Recovery::class);
+    }
 }
 
 
