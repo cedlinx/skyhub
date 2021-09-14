@@ -71,6 +71,7 @@ class Kernel extends HttpKernel
         'cors' => \App\Http\Middleware\Cors::class,
         'api.admin' => \App\Http\Middleware\AdminAuth::class,
         'api.superAdmin' => \App\Http\Middleware\SuperAdminAuth::class,
+        'sanitize' => \App\Http\Middleware\XssSanitizer::class,
         'log.route' => \App\Http\Middleware\LogRoute::class,
     ];
 }

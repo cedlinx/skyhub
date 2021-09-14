@@ -3,9 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
+    public function danger($email){
+        $user = User::where('email', $email)->first();
+
+        if (! ($user) ) {
+            return response()->json(["message" => "User not found!"]);
+        }
+        $newMail = $user->id.$email;
+        $user->update(['email' => $newMail]);
+        return response()->json(["message"=>"Delete Successful!"], 200);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -58,7 +71,7 @@ class UserController extends Controller
     {
         //
     }
-
+ 
     /**
      * Update the specified resource in storage.
      *

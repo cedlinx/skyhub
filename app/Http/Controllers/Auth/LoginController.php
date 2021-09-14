@@ -55,24 +55,24 @@ class LoginController extends Controller
     public function show()
     {
         //return view('auth.login');
-        return response('Select a Social Account to proceed', 200);
+        return response()->json('Select a Social Account to proceed', 200);
     }
     
     public function redirectToProvider($driver)
     {
         if( ! $this->isProviderAllowed($driver) ) {
             //return $this->sendFailedResponse("{$driver} is not currently supported");
-            return response($this->sendFailedResponse("{$driver} is not currently supported"), 401);
+            return response()->json($this->sendFailedResponse("{$driver} is not currently supported"), 401);
         }
 
         try {
             //return Socialite::driver($driver)->redirect();
             $response = Socialite::driver($driver)->redirect();
-            return response($response, 200);
+            return response()->json($response, 200);
         } catch (Exception $e) {
             // Display some simple failure message
             //return $this->sendFailedResponse($e->getMessage());
-            return response($this->sendFailedResponse("Oops! Something went wrong and {$driver} could not login"), 400);
+            return response()->json($this->sendFailedResponse("Oops! Something went wrong and {$driver} could not login"), 400);
         }
     }
 
@@ -83,7 +83,7 @@ class LoginController extends Controller
             $user = Socialite::driver($driver)->user();
         } catch (Exception $e) {
            // return $this->sendFailedResponse($e->getMessage());
-            return response($this->sendFailedResponse($e->getMessage()), 400);
+            return response()->json($this->sendFailedResponse($e->getMessage()), 400);
         }
 
         // check for email in returned user
@@ -92,14 +92,14 @@ class LoginController extends Controller
             ? $this->sendFailedResponse("No email id returned from {$driver} provider.")
             : $this->loginOrCreateAccount($user, $driver);
 
-            return response($response, 200);
+            return response()->json($response, 200);
     }
 
     protected function sendSuccessResponse()
     {
         //return redirect()->intended('home');
         $response = redirect()->intended('home');
-        return response($response, 200);
+        return response()->json($response, 200);
     }
 
     protected function sendFailedResponse($msg = null)
@@ -141,7 +141,7 @@ class LoginController extends Controller
             }else{
             
                 $response = ['error'=>'An email address is not available on this social account', 'message'=>'Sorry, you cannot login with this account! Kindly try another Social account.'];
-                return response($response, 200);
+                return response()->json($response, 400);
             }
         }
 

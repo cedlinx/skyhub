@@ -23,12 +23,12 @@ class ApiAuthController extends Controller
             'password' => 'required|string|min:6|confirmed',
             'address' => 'required|string',
             'phone' => 'required|string|min:8|max:12',
-            'role' => 'integer',
+            'role' => 'nullable|integer',
         ]);
 
         if ($validator->fails())
         {
-            return response(['errors'=>$validator->errors()->all()], 422);
+            return response()->json(['errors'=>$validator->errors()->all()], 412);
         }
 
         $request['password']=Hash::make($request['password']);
@@ -50,7 +50,7 @@ class ApiAuthController extends Controller
             ] 
         ];
 
-        return response($response, 200);
+        return response()->json($response, 200);
     }
 
     public function login (Request $request) {
@@ -61,7 +61,7 @@ class ApiAuthController extends Controller
 
         if ($validator->fails())
         {
-            return response(['errors'=>$validator->errors()->all()], 422);
+            return response()->json(['errors'=>$validator->errors()->all()], 412);
         }
 
         $user = User::where('email', $request->email)->first();
@@ -83,7 +83,7 @@ class ApiAuthController extends Controller
                             'token' => $token
                         ]
                     ];
-                    return response($response, 401);
+                    return response()->json($response, 401);
                 }   //end of verification check
 
                 $response = [                    
@@ -91,14 +91,14 @@ class ApiAuthController extends Controller
                     'logged_in_user' => $user->name,
                     'token' => $token
                 ];
-                return response($response, 200);
+                return response()->json($response, 200);
             } else {
                 $response = ["message" => "Password mismatch"];
-                return response($response, 422);
+                return response()->json($response, 412);
             }
         } else {
             $response = ["message" =>'User does not exist'];
-            return response($response, 422);
+            return response()->json($response, 400);
         }
     }
 
@@ -106,9 +106,26 @@ class ApiAuthController extends Controller
         $token = $request->user()->token();
         $token->revoke();
         $response = ['message' => 'You have been successfully logged out!'];
-        return response($response, 200);
+        return response()->json($response, 200);
     }
 
-    
+    //Handle MethodNotAllowedHttpException
+    public function noGet(){
+        $response = [
+            "Error" => "Method Not Allowed HTTP Exception",
+            "message" => "You are using GET instead of POST!"
+        ];
+
+        return response()->json($response, 405);
+    }
+
+    public function noPost(){
+        $response = [
+            "Error" => "Method Not Allowed HTTP Exception",
+            "message" => "You are using POST instead of GET!"
+        ];
+
+        return response()->json($response, 405);
+    }
 }
 

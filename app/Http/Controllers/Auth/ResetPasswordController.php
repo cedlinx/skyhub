@@ -65,10 +65,10 @@ class ResetPasswordController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response(['errors'=>$validator->errors()->all()], 422);
+            return response()->json(['errors'=>$validator->errors()->all()], 422);
         }
         $response = $input;
-        return response($response, 200);
+        return response()->json($response, 200);
     }
    
     //ACTIVE
@@ -82,7 +82,7 @@ class ResetPasswordController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response(['errors'=>$validator->errors()->all()], 422);
+            return response()->json(['errors'=>$validator->errors()->all()], 422);
         }
 
         $response = Password::reset($input, function ($user, $password) {

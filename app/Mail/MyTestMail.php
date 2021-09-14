@@ -30,7 +30,7 @@ class MyTestMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Test Email')
+        return $this->subject('Skydah Alert')
                     ->view('emails.myTestMail');
     }
 }
