@@ -18,9 +18,10 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         '0d59ee240a4cd96ddbb4ff164fccea4d' => __DIR__ . '/..' . '/symfony/polyfill-php73/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
-        '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         '23c18046f52bef3eea034657bafda50f' => __DIR__ . '/..' . '/symfony/polyfill-php81/bootstrap.php',
@@ -44,6 +45,10 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
     );
 
     public static $prefixLengthsPsr4 = array (
+        'x' => 
+        array (
+            'xtype\\' => 6,
+        ),
         'v' => 
         array (
             'voku\\' => 5,
@@ -101,6 +106,8 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
             'Symfony\\Component\\CssSelector\\' => 30,
             'Symfony\\Component\\Console\\' => 26,
             'Symfony\\Bridge\\PsrHttpMessage\\' => 30,
+            'StephenHill\\Benchmarks\\' => 23,
+            'StephenHill\\' => 12,
         ),
         'R' => 
         array (
@@ -113,7 +120,6 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
             'Psr\\SimpleCache\\' => 16,
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
-            'Psr\\Http\\Client\\' => 16,
             'Psr\\EventDispatcher\\' => 20,
             'Psr\\Container\\' => 14,
             'Prophecy\\' => 9,
@@ -179,6 +185,7 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         ),
         'E' => 
         array (
+            'Elliptic\\' => 9,
             'Egulias\\EmailValidator\\' => 23,
         ),
         'D' => 
@@ -200,6 +207,8 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'B' => 
         array (
             'Brick\\Math\\' => 11,
+            'BN\\' => 3,
+            'BI\\' => 3,
         ),
         'A' => 
         array (
@@ -211,6 +220,10 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
     );
 
     public static $prefixDirsPsr4 = array (
+        'xtype\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/myxtype/eos-client/src',
+        ),
         'voku\\' => 
         array (
             0 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
@@ -361,6 +374,14 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         array (
             0 => __DIR__ . '/..' . '/symfony/psr-http-message-bridge',
         ),
+        'StephenHill\\Benchmarks\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/stephenhill/base58/benchmarks',
+        ),
+        'StephenHill\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/stephenhill/base58/src',
+        ),
         'Ramsey\\Uuid\\' => 
         array (
             0 => __DIR__ . '/..' . '/ramsey/uuid/src',
@@ -385,10 +406,6 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         array (
             0 => __DIR__ . '/..' . '/psr/http-factory/src',
             1 => __DIR__ . '/..' . '/psr/http-message/src',
-        ),
-        'Psr\\Http\\Client\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/http-client/src',
         ),
         'Psr\\EventDispatcher\\' => 
         array (
@@ -543,6 +560,10 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         array (
             0 => __DIR__ . '/..' . '/facade/flare-client-php/src',
         ),
+        'Elliptic\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplito/elliptic-php/lib',
+        ),
         'Egulias\\EmailValidator\\' => 
         array (
             0 => __DIR__ . '/..' . '/egulias/email-validator/src',
@@ -591,6 +612,14 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         array (
             0 => __DIR__ . '/..' . '/brick/math/src',
         ),
+        'BN\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplito/bn-php/lib',
+        ),
+        'BI\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplito/bigint-wrapper-php/lib',
+        ),
         'Asm89\\Stack\\' => 
         array (
             0 => __DIR__ . '/..' . '/asm89/stack-cors/src',
@@ -638,6 +667,8 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'AfricasTalking\\SDK\\Token' => __DIR__ . '/..' . '/africastalking/africastalking/src/Token.php',
         'AfricasTalking\\SDK\\Voice' => __DIR__ . '/..' . '/africastalking/africastalking/src/Voice.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
+        'App\\Events\\Event' => __DIR__ . '/../..' . '/app/Events/Event.php',
+        'App\\Events\\ExampleEvent' => __DIR__ . '/../..' . '/app/Events/ExampleEvent.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\AssetController' => __DIR__ . '/../..' . '/app/Http/Controllers/AssetController.php',
         'App\\Http\\Controllers\\Auth\\ApiAuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ApiAuthController.php',
@@ -653,7 +684,9 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\PaymentController' => __DIR__ . '/../..' . '/app/Http/Controllers/PaymentController.php',
         'App\\Http\\Controllers\\RecoveryController' => __DIR__ . '/../..' . '/app/Http/Controllers/RecoveryController.php',
+        'App\\Http\\Controllers\\SkydahController' => __DIR__ . '/../..' . '/app/Http/Controllers/SkydahController.php',
         'App\\Http\\Controllers\\SmsServiceController' => __DIR__ . '/../..' . '/app/Http/Controllers/SmsServiceController.php',
+        'App\\Http\\Controllers\\TransferController' => __DIR__ . '/../..' . '/app/Http/Controllers/TransferController.php',
         'App\\Http\\Controllers\\TypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/TypeController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
@@ -663,6 +696,7 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'App\\Http\\Middleware\\Cors' => __DIR__ . '/../..' . '/app/Http/Middleware/Cors.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
         'App\\Http\\Middleware\\EnsureEmailIsVerified' => __DIR__ . '/../..' . '/app/Http/Middleware/EnsureEmailIsVerified.php',
+        'App\\Http\\Middleware\\ExampleMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/ExampleMiddleware.php',
         'App\\Http\\Middleware\\ForceJsonResponse' => __DIR__ . '/../..' . '/app/Http/Middleware/ForceJsonResponse.php',
         'App\\Http\\Middleware\\LogRoute' => __DIR__ . '/../..' . '/app/Http/Middleware/LogRoute.php',
         'App\\Http\\Middleware\\PreventRequestsDuringMaintenance' => __DIR__ . '/../..' . '/app/Http/Middleware/PreventRequestsDuringMaintenance.php',
@@ -673,6 +707,9 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Middleware\\XssSanitizer' => __DIR__ . '/../..' . '/app/Http/Middleware/XssSanitizer.php',
+        'App\\Jobs\\ExampleJob' => __DIR__ . '/../..' . '/app/Jobs/ExampleJob.php',
+        'App\\Jobs\\Job' => __DIR__ . '/../..' . '/app/Jobs/Job.php',
+        'App\\Listeners\\ExampleListener' => __DIR__ . '/../..' . '/app/Listeners/ExampleListener.php',
         'App\\Mail\\MyTestMail' => __DIR__ . '/../..' . '/app/Mail/MyTestMail.php',
         'App\\Models\\Asset' => __DIR__ . '/../..' . '/app/Models/Asset.php',
         'App\\Models\\Category' => __DIR__ . '/../..' . '/app/Models/Category.php',
@@ -680,6 +717,7 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'App\\Models\\LogRequest' => __DIR__ . '/../..' . '/app/Models/LogRequest.php',
         'App\\Models\\Payment' => __DIR__ . '/../..' . '/app/Models/Payment.php',
         'App\\Models\\Recovery' => __DIR__ . '/../..' . '/app/Models/Recovery.php',
+        'App\\Models\\Transfer' => __DIR__ . '/../..' . '/app/Models/Transfer.php',
         'App\\Models\\Type' => __DIR__ . '/../..' . '/app/Models/Type.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Notifications\\MailResetPasswordNotification' => __DIR__ . '/../..' . '/app/Notifications/MailResetPasswordNotification.php',
@@ -692,6 +730,9 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Cors.php',
         'Asm89\\Stack\\CorsService' => __DIR__ . '/..' . '/asm89/stack-cors/src/CorsService.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
+        'BI\\BigInteger' => __DIR__ . '/..' . '/simplito/bigint-wrapper-php/lib/BigInteger.php',
+        'BN\\BN' => __DIR__ . '/..' . '/simplito/bn-php/lib/BN.php',
+        'BN\\Red' => __DIR__ . '/..' . '/simplito/bn-php/lib/Red.php',
         'Brick\\Math\\BigDecimal' => __DIR__ . '/..' . '/brick/math/src/BigDecimal.php',
         'Brick\\Math\\BigInteger' => __DIR__ . '/..' . '/brick/math/src/BigInteger.php',
         'Brick\\Math\\BigNumber' => __DIR__ . '/..' . '/brick/math/src/BigNumber.php',
@@ -984,6 +1025,25 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'Egulias\\EmailValidator\\Warning\\QuotedString' => __DIR__ . '/..' . '/egulias/email-validator/src/Warning/QuotedString.php',
         'Egulias\\EmailValidator\\Warning\\TLD' => __DIR__ . '/..' . '/egulias/email-validator/src/Warning/TLD.php',
         'Egulias\\EmailValidator\\Warning\\Warning' => __DIR__ . '/..' . '/egulias/email-validator/src/Warning/Warning.php',
+        'Elliptic\\Curve\\BaseCurve' => __DIR__ . '/..' . '/simplito/elliptic-php/lib/Curve/BaseCurve.php',
+        'Elliptic\\Curve\\BaseCurve\\Point' => __DIR__ . '/..' . '/simplito/elliptic-php/lib/Curve/BaseCurve/Point.php',
+        'Elliptic\\Curve\\EdwardsCurve' => __DIR__ . '/..' . '/simplito/elliptic-php/lib/Curve/EdwardsCurve.php',
+        'Elliptic\\Curve\\EdwardsCurve\\Point' => __DIR__ . '/..' . '/simplito/elliptic-php/lib/Curve/EdwardsCurve/Point.php',
+        'Elliptic\\Curve\\MontCurve' => __DIR__ . '/..' . '/simplito/elliptic-php/lib/Curve/MontCurve.php',
+        'Elliptic\\Curve\\MontCurve\\Point' => __DIR__ . '/..' . '/simplito/elliptic-php/lib/Curve/MontCurve/Point.php',
+        'Elliptic\\Curve\\PresetCurve' => __DIR__ . '/..' . '/simplito/elliptic-php/lib/Curve/PresetCurve.php',
+        'Elliptic\\Curve\\ShortCurve' => __DIR__ . '/..' . '/simplito/elliptic-php/lib/Curve/ShortCurve.php',
+        'Elliptic\\Curve\\ShortCurve\\JPoint' => __DIR__ . '/..' . '/simplito/elliptic-php/lib/Curve/ShortCurve/JPoint.php',
+        'Elliptic\\Curve\\ShortCurve\\Point' => __DIR__ . '/..' . '/simplito/elliptic-php/lib/Curve/ShortCurve/Point.php',
+        'Elliptic\\Curves' => __DIR__ . '/..' . '/simplito/elliptic-php/lib/Curves.php',
+        'Elliptic\\EC' => __DIR__ . '/..' . '/simplito/elliptic-php/lib/EC.php',
+        'Elliptic\\EC\\KeyPair' => __DIR__ . '/..' . '/simplito/elliptic-php/lib/EC/KeyPair.php',
+        'Elliptic\\EC\\Signature' => __DIR__ . '/..' . '/simplito/elliptic-php/lib/EC/Signature.php',
+        'Elliptic\\EdDSA' => __DIR__ . '/..' . '/simplito/elliptic-php/lib/EdDSA.php',
+        'Elliptic\\EdDSA\\KeyPair' => __DIR__ . '/..' . '/simplito/elliptic-php/lib/EdDSA/KeyPair.php',
+        'Elliptic\\EdDSA\\Signature' => __DIR__ . '/..' . '/simplito/elliptic-php/lib/EdDSA/Signature.php',
+        'Elliptic\\HmacDRBG' => __DIR__ . '/..' . '/simplito/elliptic-php/lib/HmacDRBG.php',
+        'Elliptic\\Utils' => __DIR__ . '/..' . '/simplito/elliptic-php/lib/Utils.php',
         'Facade\\FlareClient\\Api' => __DIR__ . '/..' . '/facade/flare-client-php/src/Api.php',
         'Facade\\FlareClient\\Concerns\\HasContext' => __DIR__ . '/..' . '/facade/flare-client-php/src/Concerns/HasContext.php',
         'Facade\\FlareClient\\Concerns\\UsesTime' => __DIR__ . '/..' . '/facade/flare-client-php/src/Concerns/UsesTime.php',
@@ -1614,11 +1674,8 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'GrahamCampbell\\ResultType\\Error' => __DIR__ . '/..' . '/graham-campbell/result-type/src/Error.php',
         'GrahamCampbell\\ResultType\\Result' => __DIR__ . '/..' . '/graham-campbell/result-type/src/Result.php',
         'GrahamCampbell\\ResultType\\Success' => __DIR__ . '/..' . '/graham-campbell/result-type/src/Success.php',
-        'GuzzleHttp\\BodySummarizer' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/BodySummarizer.php',
-        'GuzzleHttp\\BodySummarizerInterface' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/BodySummarizerInterface.php',
         'GuzzleHttp\\Client' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Client.php',
         'GuzzleHttp\\ClientInterface' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/ClientInterface.php',
-        'GuzzleHttp\\ClientTrait' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/ClientTrait.php',
         'GuzzleHttp\\Cookie\\CookieJar' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Cookie/CookieJar.php',
         'GuzzleHttp\\Cookie\\CookieJarInterface' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Cookie/CookieJarInterface.php',
         'GuzzleHttp\\Cookie\\FileCookieJar' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Cookie/FileCookieJar.php',
@@ -1630,6 +1687,7 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'GuzzleHttp\\Exception\\GuzzleException' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Exception/GuzzleException.php',
         'GuzzleHttp\\Exception\\InvalidArgumentException' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Exception/InvalidArgumentException.php',
         'GuzzleHttp\\Exception\\RequestException' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Exception/RequestException.php',
+        'GuzzleHttp\\Exception\\SeekException' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Exception/SeekException.php',
         'GuzzleHttp\\Exception\\ServerException' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Exception/ServerException.php',
         'GuzzleHttp\\Exception\\TooManyRedirectsException' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Exception/TooManyRedirectsException.php',
         'GuzzleHttp\\Exception\\TransferException' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Exception/TransferException.php',
@@ -1639,12 +1697,10 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'GuzzleHttp\\Handler\\CurlHandler' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/CurlHandler.php',
         'GuzzleHttp\\Handler\\CurlMultiHandler' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/CurlMultiHandler.php',
         'GuzzleHttp\\Handler\\EasyHandle' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/EasyHandle.php',
-        'GuzzleHttp\\Handler\\HeaderProcessor' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/HeaderProcessor.php',
         'GuzzleHttp\\Handler\\MockHandler' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/MockHandler.php',
         'GuzzleHttp\\Handler\\Proxy' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/Proxy.php',
         'GuzzleHttp\\Handler\\StreamHandler' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/StreamHandler.php',
         'GuzzleHttp\\MessageFormatter' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/MessageFormatter.php',
-        'GuzzleHttp\\MessageFormatterInterface' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/MessageFormatterInterface.php',
         'GuzzleHttp\\Middleware' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Middleware.php',
         'GuzzleHttp\\Pool' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Pool.php',
         'GuzzleHttp\\PrepareBodyMiddleware' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/PrepareBodyMiddleware.php',
@@ -1670,7 +1726,6 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'GuzzleHttp\\Psr7\\DroppingStream' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/DroppingStream.php',
         'GuzzleHttp\\Psr7\\FnStream' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/FnStream.php',
         'GuzzleHttp\\Psr7\\Header' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/Header.php',
-        'GuzzleHttp\\Psr7\\HttpFactory' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/HttpFactory.php',
         'GuzzleHttp\\Psr7\\InflateStream' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/InflateStream.php',
         'GuzzleHttp\\Psr7\\LazyOpenStream' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/LazyOpenStream.php',
         'GuzzleHttp\\Psr7\\LimitStream' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/LimitStream.php',
@@ -1697,6 +1752,7 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'GuzzleHttp\\RequestOptions' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/RequestOptions.php',
         'GuzzleHttp\\RetryMiddleware' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/RetryMiddleware.php',
         'GuzzleHttp\\TransferStats' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/TransferStats.php',
+        'GuzzleHttp\\UriTemplate' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/UriTemplate.php',
         'GuzzleHttp\\Utils' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Utils.php',
         'Hamcrest\\Arrays\\IsArray' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArray.php',
         'Hamcrest\\Arrays\\IsArrayContaining' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArrayContaining.php',
@@ -3449,6 +3505,7 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'Monolog\\Handler\\DoctrineCouchDBHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/DoctrineCouchDBHandler.php',
         'Monolog\\Handler\\DynamoDbHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/DynamoDbHandler.php',
         'Monolog\\Handler\\ElasticaHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/ElasticaHandler.php',
+        'Monolog\\Handler\\ElasticsearchHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/ElasticsearchHandler.php',
         'Monolog\\Handler\\ErrorLogHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/ErrorLogHandler.php',
         'Monolog\\Handler\\FallbackGroupHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/FallbackGroupHandler.php',
         'Monolog\\Handler\\FilterHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/FilterHandler.php',
@@ -4560,10 +4617,6 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'Psr\\EventDispatcher\\EventDispatcherInterface' => __DIR__ . '/..' . '/psr/event-dispatcher/src/EventDispatcherInterface.php',
         'Psr\\EventDispatcher\\ListenerProviderInterface' => __DIR__ . '/..' . '/psr/event-dispatcher/src/ListenerProviderInterface.php',
         'Psr\\EventDispatcher\\StoppableEventInterface' => __DIR__ . '/..' . '/psr/event-dispatcher/src/StoppableEventInterface.php',
-        'Psr\\Http\\Client\\ClientExceptionInterface' => __DIR__ . '/..' . '/psr/http-client/src/ClientExceptionInterface.php',
-        'Psr\\Http\\Client\\ClientInterface' => __DIR__ . '/..' . '/psr/http-client/src/ClientInterface.php',
-        'Psr\\Http\\Client\\NetworkExceptionInterface' => __DIR__ . '/..' . '/psr/http-client/src/NetworkExceptionInterface.php',
-        'Psr\\Http\\Client\\RequestExceptionInterface' => __DIR__ . '/..' . '/psr/http-client/src/RequestExceptionInterface.php',
         'Psr\\Http\\Message\\MessageInterface' => __DIR__ . '/..' . '/psr/http-message/src/MessageInterface.php',
         'Psr\\Http\\Message\\RequestFactoryInterface' => __DIR__ . '/..' . '/psr/http-factory/src/RequestFactoryInterface.php',
         'Psr\\Http\\Message\\RequestInterface' => __DIR__ . '/..' . '/psr/http-message/src/RequestInterface.php',
@@ -5070,6 +5123,14 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'SebastianBergmann\\Type\\UnknownType' => __DIR__ . '/..' . '/sebastian/type/src/UnknownType.php',
         'SebastianBergmann\\Type\\VoidType' => __DIR__ . '/..' . '/sebastian/type/src/VoidType.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+        'StephenHill\\BCMathService' => __DIR__ . '/..' . '/stephenhill/base58/src/BCMathService.php',
+        'StephenHill\\Base58' => __DIR__ . '/..' . '/stephenhill/base58/src/Base58.php',
+        'StephenHill\\Benchmarks\\Base16Event' => __DIR__ . '/..' . '/stephenhill/base58/benchmarks/Base16Event.php',
+        'StephenHill\\Benchmarks\\Base58BCMathEvent' => __DIR__ . '/..' . '/stephenhill/base58/benchmarks/Base58BCMathEvent.php',
+        'StephenHill\\Benchmarks\\Base58GMPEvent' => __DIR__ . '/..' . '/stephenhill/base58/benchmarks/Base58GMPEvent.php',
+        'StephenHill\\Benchmarks\\Base64Event' => __DIR__ . '/..' . '/stephenhill/base58/benchmarks/Base64Event.php',
+        'StephenHill\\GMPService' => __DIR__ . '/..' . '/stephenhill/base58/src/GMPService.php',
+        'StephenHill\\ServiceInterface' => __DIR__ . '/..' . '/stephenhill/base58/src/ServiceInterface.php',
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
         'Symfony\\Bridge\\PsrHttpMessage\\ArgumentValueResolver\\PsrServerRequestResolver' => __DIR__ . '/..' . '/symfony/psr-http-message-bridge/ArgumentValueResolver/PsrServerRequestResolver.php',
         'Symfony\\Bridge\\PsrHttpMessage\\EventListener\\PsrResponseListener' => __DIR__ . '/..' . '/symfony/psr-http-message-bridge/EventListener/PsrResponseListener.php',
@@ -5855,7 +5916,6 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'Symfony\\Polyfill\\Php81\\Php81' => __DIR__ . '/..' . '/symfony/polyfill-php81/Php81.php',
         'Tests\\CreatesApplication' => __DIR__ . '/../..' . '/tests/CreatesApplication.php',
         'Tests\\Feature\\ExampleTest' => __DIR__ . '/../..' . '/tests/Feature/ExampleTest.php',
-        'Tests\\TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Tests\\Unit\\ExampleTest' => __DIR__ . '/../..' . '/tests/Unit/ExampleTest.php',
         'TheSeer\\Tokenizer\\Exception' => __DIR__ . '/..' . '/theseer/tokenizer/src/Exception.php',
         'TheSeer\\Tokenizer\\NamespaceUri' => __DIR__ . '/..' . '/theseer/tokenizer/src/NamespaceUri.php',
@@ -6355,6 +6415,12 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'setasign\\Fpdi\\Tfpdf\\FpdfTpl' => __DIR__ . '/..' . '/setasign/fpdi/src/Tfpdf/FpdfTpl.php',
         'setasign\\Fpdi\\Tfpdf\\Fpdi' => __DIR__ . '/..' . '/setasign/fpdi/src/Tfpdf/Fpdi.php',
         'voku\\helper\\ASCII' => __DIR__ . '/..' . '/voku/portable-ascii/src/voku/helper/ASCII.php',
+        'xtype\\Eos\\Client' => __DIR__ . '/..' . '/myxtype/eos-client/src/Eos/Client.php',
+        'xtype\\Eos\\Ecc' => __DIR__ . '/..' . '/myxtype/eos-client/src/Eos/Ecc.php',
+        'xtype\\Eos\\Plugin' => __DIR__ . '/..' . '/myxtype/eos-client/src/Eos/Plugin.php',
+        'xtype\\Eos\\Serialize' => __DIR__ . '/..' . '/myxtype/eos-client/src/Eos/Serialize.php',
+        'xtype\\Eos\\Signature' => __DIR__ . '/..' . '/myxtype/eos-client/src/Eos/Signature.php',
+        'xtype\\Eos\\Utils' => __DIR__ . '/..' . '/myxtype/eos-client/src/Eos/Utils.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

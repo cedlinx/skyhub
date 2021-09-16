@@ -88,6 +88,11 @@ class User extends Authenticatable implements CanResetPassword, mustVerify
     {
         return $this->hasMany(Recovery::class);
     }
+
+    public function transfers()
+    {
+        return $this->hasMany(Transfer::class);
+    }
 }
 
 

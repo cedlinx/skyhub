@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '28a811d19d50b48c53a7c76448f1ff395cd995a4',
+        'reference' => '514e3d78f645e3c71d6347c7daf1c1c5630bee4e',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -176,12 +176,12 @@
             'dev_requirement' => false,
         ),
         'guzzlehttp/guzzle' => array(
-            'pretty_version' => '7.3.0',
-            'version' => '7.3.0.0',
+            'pretty_version' => '6.5.5',
+            'version' => '6.5.5.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/guzzle',
             'aliases' => array(),
-            'reference' => '7008573787b430c1c1f650e3722d9bba59967628',
+            'reference' => '9d4290de1cfd701f38099ef7e183b64b4b7b0c5e',
             'dev_requirement' => false,
         ),
         'guzzlehttp/promises' => array(
@@ -194,12 +194,12 @@
             'dev_requirement' => false,
         ),
         'guzzlehttp/psr7' => array(
-            'pretty_version' => '2.0.0',
-            'version' => '2.0.0.0',
+            'pretty_version' => '1.8.2',
+            'version' => '1.8.2.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/psr7',
             'aliases' => array(),
-            'reference' => '1dc8d9cba3897165e16d12bb13d813afb1eb3fe7',
+            'reference' => 'dc960a912984efb74d0a90222870c72c87f10c91',
             'dev_requirement' => false,
         ),
         'hamcrest/hamcrest-php' => array(
@@ -427,7 +427,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '28a811d19d50b48c53a7c76448f1ff395cd995a4',
+            'reference' => '514e3d78f645e3c71d6347c7daf1c1c5630bee4e',
             'dev_requirement' => false,
         ),
         'laravel/passport' => array(
@@ -560,12 +560,12 @@
             'dev_requirement' => true,
         ),
         'monolog/monolog' => array(
-            'pretty_version' => '2.3.2',
-            'version' => '2.3.2.0',
+            'pretty_version' => '2.3.3',
+            'version' => '2.3.3.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../monolog/monolog',
             'aliases' => array(),
-            'reference' => '71312564759a7db5b789296369c1a264efc43aad',
+            'reference' => '3962ebfe206ac7ce6c754c79e2fee0c64bf1818d',
             'dev_requirement' => false,
         ),
         'mpdf/mpdf' => array(
@@ -594,6 +594,17 @@
             'replaced' => array(
                 0 => '1.10.2',
             ),
+        ),
+        'myxtype/eos-client' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../myxtype/eos-client',
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
+            'reference' => 'ae1d2d8bf2f39400f4b326d14d83729ed63f4cb3',
+            'dev_requirement' => false,
         ),
         'nesbot/carbon' => array(
             'pretty_version' => '2.53.1',
@@ -832,21 +843,6 @@
                 0 => '1.0',
             ),
         ),
-        'psr/http-client' => array(
-            'pretty_version' => '1.0.1',
-            'version' => '1.0.1.0',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../psr/http-client',
-            'aliases' => array(),
-            'reference' => '2dfb5f6c5eff0e91e20e913f8c5452ed95b86621',
-            'dev_requirement' => false,
-        ),
-        'psr/http-client-implementation' => array(
-            'dev_requirement' => false,
-            'provided' => array(
-                0 => '1.0',
-            ),
-        ),
         'psr/http-factory' => array(
             'pretty_version' => '1.0.1',
             'version' => '1.0.1.0',
@@ -889,7 +885,7 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0.0',
+                0 => '1.0.0 || 2.0.0',
                 1 => '1.0|2.0',
             ),
         ),
@@ -1101,6 +1097,42 @@
             'install_path' => __DIR__ . '/../setasign/fpdi',
             'aliases' => array(),
             'reference' => '6231e315f73e4f62d72b73f3d6d78ff0eed93c31',
+            'dev_requirement' => false,
+        ),
+        'simplito/bigint-wrapper-php' => array(
+            'pretty_version' => '1.0.0',
+            'version' => '1.0.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../simplito/bigint-wrapper-php',
+            'aliases' => array(),
+            'reference' => 'cf21ec76d33f103add487b3eadbd9f5033a25930',
+            'dev_requirement' => false,
+        ),
+        'simplito/bn-php' => array(
+            'pretty_version' => '1.1.2',
+            'version' => '1.1.2.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../simplito/bn-php',
+            'aliases' => array(),
+            'reference' => 'e852fcd27e4acbc32459606d7606e45a85e42465',
+            'dev_requirement' => false,
+        ),
+        'simplito/elliptic-php' => array(
+            'pretty_version' => '1.0.8',
+            'version' => '1.0.8.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../simplito/elliptic-php',
+            'aliases' => array(),
+            'reference' => '5cebaf29adce31a398368972a43d13def1e7ba15',
+            'dev_requirement' => false,
+        ),
+        'stephenhill/base58' => array(
+            'pretty_version' => 'v1.1.5',
+            'version' => '1.1.5.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../stephenhill/base58',
+            'aliases' => array(),
+            'reference' => 'bd9fc19c788160a2f85ba0a19cd800eaf5ba5e99',
             'dev_requirement' => false,
         ),
         'swiftmailer/swiftmailer' => array(
