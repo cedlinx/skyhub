@@ -64,7 +64,8 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
 
     //ASSETS
     //Query for a specific asset ... available to the pulic
-    Route::get('/find/asset/{ref}', 'AssetController@show')->middleware(['sanitize', 'log.route']);  //ref is either skydahid or assetid
+    //Route::post('/find/asset/{ref}', 'AssetController@show')->middleware(['sanitize', 'log.route']);  //ref is either skydahid or assetid
+    Route::post('/find/asset', 'AssetController@show')->middleware(['sanitize', 'log.route']);  //ref is either skydahid or assetid
     //Route::get('/assets', 'AssetController@index')->name('assets.api')->middleware('verified'); //Guests should be able to verify assets, that's why this isn't in the protected route below
 
 
@@ -73,7 +74,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::get('/login', 'Auth\ApiAuthController@noGet')->name('login.api');
     Route::get('/logout', 'Auth\ApiAuthController@noGet')->name('logout.api');
     Route::post('/reset-password/{token}', 'Auth\ResetPasswordController@noPost')->name('newpassword.api');
-    Route::post('/find/asset/{ref}', 'Auth\ApiAuthController@noPost')->name('assets.api');    //->middleware('verified');
+    Route::get('/find/asset/{ref}', 'Auth\ApiAuthController@noGet')->name('assets.api');    //->middleware('verified');
     Route::post('/email/verify/{id}/{hash}', 'Auth\VerificationController@noPost')->middleware(['signed'])->name('verification.verify');
     Route::get('/resend/email/verification', 'Auth\VerificationController@noGet')->middleware(['throttle:6,1'])->name('verification.send');
     
@@ -86,54 +87,95 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
 });
 
 // protected routes will be placed here
-Route::middleware(['cors', 'json.response', 'auth:api'])->group(function () {    
+Route::middleware(['cors', 'json.response'])->group(function () {    
     Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
 
-    //Get the password reset form after the reset link is clicked
-    Route::get('/reset-password/{token}', 'Auth\ResetPasswordController@getNewPassword')->name('newpassword.api');
- 
-//Used for Access Control --- see kernel.php for where I defined them
-//    Route::get('/assets', 'AssetController@index')->middleware('api.admin')->name('assets.api');
-//    Route::get('/assets', 'AssetController@index')->middleware('api.superAdmin')->name('assets.api');
-//
-
-Route::prefix('asset')->group(function () {
-    Route::post('/add', 'AssetController@add_asset')->middleware('log.route');
-    Route::post('/generate_company_codes', 'AssetController@generate_company_codes')->middleware('log.route');
-    Route::get('/get_company_codes/{id}', 'AssetController@get_company_codes');
-    Route::post('/upload_bulk_assets', 'AssetController@upload_bulk_assets')->middleware('log.route');
-
-    Route::get('/add', 'Auth\ApiAuthController@noGet')->middleware('log.route');
-    Route::get('/generate_company_codes', 'Auth\ApiAuthController@noGet')->middleware('log.route');
-    Route::post('/get_company_codes/{id}', 'Auth\ApiAuthController@noPost');
-    Route::get('/upload_bulk_assets', 'Auth\ApiAuthController@noGet')->middleware('log.route');
-
-    //COA routes:a
+        //Get the password reset form after the reset link is clicked
+        Route::get('/reset-password/{token}', 'Auth\ResetPasswordController@getNewPassword')->name('newpassword.api');
     
-    Route::get('/list', 'AssetController@index')->middleware('log.route');
-    Route::post('/list', 'Auth\ApiAuthController@noPost');
-    Route::post('/modify', 'AssetController@update')->middleware('log.route');
-    Route::get('/modify', 'Auth\ApiAuthController@noGet');
-    Route::post('/delete', 'AssetController@destroy')->middleware('log.route');
-    Route::get('/delete', 'Auth\ApiAuthController@noGet');
-    //COA routes:z
+    //Used for Access Control --- see kernel.php for where I defined them
+    //    Route::get('/assets', 'AssetController@index')->middleware('api.admin')->name('assets.api');
+    //    Route::get('/assets', 'AssetController@index')->middleware('api.superAdmin')->name('assets.api');
+    //
+
+    Route::prefix('asset')->group(function () {
+        Route::post('/add', 'AssetController@add_asset')->middleware('log.route');
+        Route::post('/generate_company_codes', 'AssetController@generate_company_codes')->middleware('log.route');
+        Route::get('/get_company_codes/{id}', 'AssetController@get_company_codes');
+        Route::post('/upload_bulk_assets', 'AssetController@upload_bulk_assets')->middleware('log.route');
+
+        Route::get('/add', 'Auth\ApiAuthController@noGet')->middleware('log.route');
+        Route::get('/generate_company_codes', 'Auth\ApiAuthController@noGet')->middleware('log.route');
+        Route::post('/get_company_codes/{id}', 'Auth\ApiAuthController@noPost');
+        Route::get('/upload_bulk_assets', 'Auth\ApiAuthController@noGet')->middleware('log.route');
+
+        //COA routes:a
+        
+        Route::get('/list', 'AssetController@index')->middleware('log.route');
+        Route::post('/list', 'Auth\ApiAuthController@noPost');
+        Route::post('/modify', 'AssetController@update')->middleware('log.route');
+        Route::get('/modify', 'Auth\ApiAuthController@noGet');
+        Route::post('/delete', 'AssetController@destroy')->middleware('log.route');
+        Route::get('/delete', 'Auth\ApiAuthController@noGet');
+        Route::post('/transfer', 'AssetController@transfer')->middleware('log.route');
+        Route::get('/transfer', 'Auth\ApiAuthController@noGet');
+        //COA routes:z
+    });
+
+    Route::prefix('email')->group(function () {
+        Route::post('/send_email', 'EmailServiceController@send_email');
+        Route::get('/send_email', 'Auth\ApiAuthController@noGet');
+    });
+
+    Route::prefix('sms')->group(function () {
+        Route::post('/send_sms', 'SmsServiceController@send_user_sms');
+        Route::get('/send_sms', 'Auth\ApiAuthController@noGet');
+    });
+
+    Route::prefix('payment')->group(function () {
+        Route::post('/save_payment', 'PaymentController@save_payment')->middleware('log.route');
+        Route::get('/save_payment', 'Auth\ApiAuthController@noGet')->middleware('log.route');
+    });
+
+    //Blockchain
+
+    Route::get('/', function () {
+        return "Skydah on EOSIO sample integration on Lumen";
+    });
+
+    Route::prefix('blockchain')->group(function () {
+        Route::post('create_asset', 'SkydahController@createAsset');
+
+        Route::post('set_asset_validity', 'SkydahController@setValidity');
+
+        Route::post('transfer_asset', 'SkydahController@transferAsset');
+
+        Route::post('get_asset', 'SkydahController@getAsset');
+
+        Route::post('get_asset_by_hash', 'SkydahController@getAssetByHash');
+    });
+    //Blockchain ends
 });
 
-Route::prefix('email')->group(function () {
-    Route::post('/send_email', 'EmailServiceController@send_email');
-    Route::get('/send_email', 'Auth\ApiAuthController@noGet');
+/*
+//Blockchain
+
+$router->get('/', function () use ($router) {
+    return "Skydah on EOSIO sample integration on Lumen";
 });
 
-Route::prefix('sms')->group(function () {
-    Route::post('/send_sms', 'SmsServiceController@send_user_sms');
-    Route::get('/send_sms', 'Auth\ApiAuthController@noGet');
-});
+$router->group(['prefix' => 'api'], function () use ($router) {
+  $router->post('create_asset',  ['uses' => 'SkydahController@createAsset']);
 
-Route::prefix('payment')->group(function () {
-    Route::post('/save_payment', 'PaymentController@save_payment')->middleware('log.route');
-    Route::get('/save_payment', 'Auth\ApiAuthController@noGet')->middleware('log.route');
+  $router->post('set_asset_validity',  ['uses' => 'SkydahController@setValidity']);
+
+  $router->post('transfer_asset',  ['uses' => 'SkydahController@transferAsset']);
+
+  $router->post('get_asset',  ['uses' => 'SkydahController@getAsset']);
+
+  $router->post('get_asset_by_hash',  ['uses' => 'SkydahController@getAssetByHash']);
 });
-});
+*/
 
 /*
 //From Kenny Starts here

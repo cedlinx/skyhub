@@ -12,7 +12,7 @@ class Asset extends Model
     
     protected $dates = ['deleted_at'];
     protected $fillable = [
-        'name', 'description', 'skydahid', 'assetid', 'category_id', 'user_id'
+        'name', 'description', 'skydahid', 'assetid', 'category_id', 'user_id', 'transferable'
     ];
     
     public function user()
@@ -32,6 +32,11 @@ class Asset extends Model
     public function recoveries()
     {
         return $this->hasMany(Recovery::class);
+    }
+
+    public function transfers()
+    {
+        return $this->hasMany(Transfer::class);
     }
 
 }

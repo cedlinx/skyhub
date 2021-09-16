@@ -7,7 +7,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.0.1",
+        "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^8.54",
         "laravel/helpers": "^1.4",
         "laravel/passport": "^10.1",
@@ -15,7 +15,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "niklasravnsborg/laravel-pdf": "^4.1",
-        "africastalking/africastalking": "^3.0"
+        "africastalking/africastalking": "^3.0",
+        "myxtype/eos-client": "dev-master"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
