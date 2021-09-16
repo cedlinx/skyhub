@@ -15,7 +15,7 @@ class CreateCompanyCodesTable extends Migration
     {
         Schema::create('company_codes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('company_id');
+            $table->string('user_id');
             $table->string('code');
             $table->timestamps();
         });

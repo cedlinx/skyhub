@@ -323,14 +323,24 @@ class AssetController extends Controller
 
     public function generate_company_codes(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'number_of_codes' => 'required',
+            'user_id' => 'nullable|integer',
+        ]);
+
+        if ($validator->fails())
+        {
+            return response()->json(['errors'=>$validator->errors()->all()], 412);
+        }
+        
         $number_of_codes = $request->number_of_codes;
-        $company_id = $request->company_id;
+        $user_id = $request->user_id;
 
         $codes = array();
 
         for($i=1; $i<=$number_of_codes; $i++) {
             $data = [
-                'company_id' => $request->company_id,
+                'user_id' => $request->user_id,
                 'code' => $this->generate_random_string()
             ];
 
@@ -341,9 +351,9 @@ class AssetController extends Controller
         return $this->sendSuccess('Codes successfully generated', $codes);
     }
 
-    public function get_company_codes($company_id)
+    public function get_company_codes($user_id)
     {
-        $company_codes = CompanyCode::where('company_id', $company_id)->get();
+        $company_codes = CompanyCode::where('user_id', $user_id)->get();
 
         if($company_codes != null or $company_codes != NULL) {
             return $this->sendSuccess('Company code successfully retrieved', $company_codes);
