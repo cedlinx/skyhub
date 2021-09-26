@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Skydah'),
 
     /*
     |--------------------------------------------------------------------------
@@ -174,9 +174,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        //Required for social logins
+        //COA: Required for social logins
         Laravel\Socialite\SocialiteServiceProvider::class,
-        //Required for pdf mail attachments
+        //COA: Required for pdf mail attachments
         niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
 
     ],

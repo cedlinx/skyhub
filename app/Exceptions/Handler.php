@@ -7,6 +7,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use App\Exceptions\InvalidSignatureException;
 
 use Throwable;
 
@@ -18,10 +19,13 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [   ////from blockchain
+        /*
         AuthorizationException::class,
         HttpException::class,
         ModelNotFoundException::class,
         ValidationException::class,
+        InvalidSignatureException::class,
+        */
     ];
 
     /**
@@ -72,9 +76,15 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
+       // $this->reportable(function (Throwable $e) {
+//        $this->reportable(function (InvalidSignatureException $e) {
+        $this->renderable(function (InvalidSignatureException $e) {
             //COA
-            //if($e->instanceof("MethodNotAllowedException")) return response()->json(["Exception"=>"Not allowed"]);
+            return response()->json(["Exception"=>"Invalid Signature"], 401);
+        //    if($e->instanceof("MethodNotAllowedException")) return response()->json(["Exception"=>"Method not allowed"]);
+        //    if($e->instanceof("InvalidSignatureException")) return response()->json(["Exception"=>"Invalid Signature"]);
         });
     }
 }
+
+//

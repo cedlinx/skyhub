@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Type;
+use Validator;
 
 class TypeController extends Controller
 {
@@ -13,7 +15,10 @@ class TypeController extends Controller
      */
     public function index()
     {
-        //
+        $types = Type::get();
+        return response()->json([
+            $types->toArray()
+        ], 200);
     }
 
     /**
@@ -23,7 +28,7 @@ class TypeController extends Controller
      */
     public function create()
     {
-        //
+      
     }
 
     /**
@@ -34,7 +39,22 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'type' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255'
+        ]);
+
+        if ($validator->fails()) return response()->json(['errors' => $validator->errors()->all()], 412);
+
+        $type = new Type;
+        $type->type = $request->type;
+        $type->description = $request->description;
+        $type->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Asset type created successfully!'
+        ], 200);
     }
 
     /**
@@ -66,9 +86,30 @@ class TypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'type' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+            'id' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) return response()->json(['errors' => $validator->errors()->all()], 412);
+
+        $type = Type::find($request->id);
+
+        if ( ! ($type) ) return response()->json(['Sorry! Requested asset type not found.'], 422);
+
+        $typeName = $type->type;
+
+        $type->type = $request->type;
+        $type->description = $request->description;
+        $type->save();
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'The asset type has been updated!'
+        ]);
     }
 
     /**
@@ -77,8 +118,26 @@ class TypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) return response()->json(['errors' => $validator->errors()->all()], 412);
+
+        $type = Type::find($request->id);
+
+        if ( ! ($type) ) return response()->json(['Sorry! Requested asset type not found.'], 422);
+
+        $typeName = $type->type;
+
+        $type->delete();
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'The ' .$typeName. ' asset type has been deleted!'
+        ]);
+        
     }
 }

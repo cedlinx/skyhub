@@ -6,6 +6,8 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\User;    //DELETE IN PRODUCTION
+
 class SuperAdminAuth
 {
     /**
@@ -17,8 +19,11 @@ class SuperAdminAuth
      */
     public function handle(Request $request, Closure $next)
     {
+    ////    $user = User::find(2);
+    ////    auth()->login($user);
         //role of -1 is admin; -2 is superadmin; 0 is normal/regular user; >0 represents various external users: agency, enterprise, etc
-        if (Auth::guard('api')->check() && $request->user()->role = -2) {
+        //if (Auth::guard('api')->check() && $request->user()->role = -2) { 
+        if (Auth::guard('api')->check() && $request->user()->group->name == 'Super Admin') {
             return $next($request);
         } else {
             $message = ["message" => "Permission Denied"];

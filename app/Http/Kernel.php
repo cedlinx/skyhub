@@ -73,6 +73,9 @@ class Kernel extends HttpKernel
         'api.superAdmin' => \App\Http\Middleware\SuperAdminAuth::class,
         'sanitize' => \App\Http\Middleware\XssSanitizer::class,
         'log.route' => \App\Http\Middleware\LogRoute::class,
+        'agency' => \App\Http\Middleware\Agency::class,
+        'individual' => \App\Http\Middleware\Individual::class,
+        'enterprise' => \App\Http\Middleware\Enterprise::class,
     ];
 }
 /*

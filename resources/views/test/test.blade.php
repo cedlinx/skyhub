@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
- <title>Request for password reset</title>
+ <title>Skydah Alert</title>
 </head>
 <body>
  
- <h1>This is a test mail from Skydah</h1>
- <p>Laravel 8 send email example</p>
+ <h1>Skydah Alert!!!</h1>
+ <p>Someone has just verified your asset on Skydah. If you lost any asset, kindly check your dashboard for more info.</p>
  
 </body>
 </html>

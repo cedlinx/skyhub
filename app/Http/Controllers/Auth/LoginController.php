@@ -139,7 +139,7 @@ class LoginController extends Controller
                     'password' => ''
                 ]);
             }else{
-            
+                        //This has already been handled in handleProviderCallback's $response... Consider removing after test
                 $response = ['error'=>'An email address is not available on this social account', 'message'=>'Sorry, you cannot login with this account! Kindly try another Social account.'];
                 return response()->json($response, 400);
             }
