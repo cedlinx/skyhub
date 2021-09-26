@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '514e3d78f645e3c71d6347c7daf1c1c5630bee4e',
+        'reference' => '6423f082dfda8b57940b0578f675011383f4b5a1',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -427,7 +427,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '514e3d78f645e3c71d6347c7daf1c1c5630bee4e',
+            'reference' => '6423f082dfda8b57940b0578f675011383f4b5a1',
             'dev_requirement' => false,
         ),
         'laravel/passport' => array(
@@ -560,12 +560,12 @@
             'dev_requirement' => true,
         ),
         'monolog/monolog' => array(
-            'pretty_version' => '2.3.3',
-            'version' => '2.3.3.0',
+            'pretty_version' => '2.3.4',
+            'version' => '2.3.4.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../monolog/monolog',
             'aliases' => array(),
-            'reference' => '3962ebfe206ac7ce6c754c79e2fee0c64bf1818d',
+            'reference' => '437e7a1c50044b92773b361af77620efb76fff59',
             'dev_requirement' => false,
         ),
         'mpdf/mpdf' => array(
@@ -724,12 +724,12 @@
             'dev_requirement' => true,
         ),
         'phpdocumentor/type-resolver' => array(
-            'pretty_version' => '1.4.0',
-            'version' => '1.4.0.0',
+            'pretty_version' => '1.5.0',
+            'version' => '1.5.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpdocumentor/type-resolver',
             'aliases' => array(),
-            'reference' => '6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0',
+            'reference' => '30f38bffc6f24293dadd1823936372dfa9e86e2f',
             'dev_requirement' => true,
         ),
         'phpoption/phpoption' => array(
@@ -760,12 +760,12 @@
             'dev_requirement' => true,
         ),
         'phpunit/php-code-coverage' => array(
-            'pretty_version' => '9.2.6',
-            'version' => '9.2.6.0',
+            'pretty_version' => '9.2.7',
+            'version' => '9.2.7.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpunit/php-code-coverage',
             'aliases' => array(),
-            'reference' => 'f6293e1b30a2354e8428e004689671b83871edde',
+            'reference' => 'd4c798ed8d51506800b441f7a13ecb0f76f12218',
             'dev_requirement' => true,
         ),
         'phpunit/php-file-iterator' => array(
@@ -885,8 +885,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0.0 || 2.0.0',
-                1 => '1.0|2.0',
+                0 => '1.0|2.0',
+                1 => '1.0.0 || 2.0.0 || 3.0.0',
             ),
         ),
         'psr/simple-cache' => array(

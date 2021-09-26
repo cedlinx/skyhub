@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Auth\Passwords\CanResetPassword as canReset;   //NOTE the difference between this and the next line. the next is an interface, this is a Trait. //I added "as canReset" to avoid a conflict
 use Illuminate\Contracts\Auth\CanResetPassword;     //Interface
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 //COA: Email verification
 use Illuminate\Contracts\Auth\MustVerifyEmail as mustVerify;    //interface
@@ -17,7 +18,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail as mustVerify;    //interface
 
 class User extends Authenticatable implements CanResetPassword, mustVerify
 {
-    use HasFactory, HasApiTokens, Notifiable;
+    use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -35,7 +36,8 @@ class User extends Authenticatable implements CanResetPassword, mustVerify
         'address',
         'phone',
         'email_verified_at',
-        'email_verified'
+        'email_verified',
+        'group_id'
     ];
     
     protected $guarded = ['*'];
@@ -92,6 +94,12 @@ class User extends Authenticatable implements CanResetPassword, mustVerify
     public function transfers()
     {
         return $this->hasMany(Transfer::class);
+    }
+
+    public function group() {
+        return $this->belongsTo(Group::class)->withDefault([
+            'group' => 'Unknown'
+        ]);
     }
 }
 

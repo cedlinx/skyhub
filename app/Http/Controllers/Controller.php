@@ -11,6 +11,8 @@ use AfricasTalking\SDK\AfricasTalking;
 use xtype\Eos\Client;   //blockchain
 use Illuminate\Http\Request;    //blockchain
 use Illuminate\Support\Facades\Http; //blockchain
+//use App\Models\Asset;   //delete_asset_from_blockchain()
+use Mail; 
 
 class Controller extends BaseController
 {
@@ -32,6 +34,38 @@ class Controller extends BaseController
             'data' => $data,
             'success' => false
         ], 401);
+    }
+
+    //COA: added to handle email alerts: I couldn't get emails using the existing function
+    public function coaSendEmail($email, $title, $name){
+    
+        $data["email"] = $email;   //'cedlinx@yahoo.com'; //$request->get("email");
+        $data["client_name"] = $name; //$request->get("client_name");
+        $data["subject"] = $title; //$request->get("subject");
+    
+       // $pdf = PDF::loadView('test/test', $data);   //1a          //this creates the pdf?
+    
+        try{
+            //Mail::send('test/test', $data, function($message)use($data,$pdf) {    //2a supports pdf attachment and requires 1a and 3a
+            Mail::send('test/test', $data, function($message) use($data) {           //2b without pdf attachment     //test/test is the view containing the body of the email
+            $message->to($data["email"], $data["client_name"])
+            ->subject($data["subject"]);    //remove this semicolon if you include 3a
+        //    ->attachData($pdf->output(), "invoice.pdf");  //3a
+            });
+        }catch(JWTException $exception){
+            $this->serverstatuscode = "0";
+            $this->serverstatusdes = $exception->getMessage();
+        }
+        if (Mail::failures()) {
+             $this->statusdesc  =   "Error sending mail";
+             $this->statuscode  =   "500";
+    
+        }else{
+    
+           $this->statusdesc  =   "Message sent Succesfully";
+           $this->statuscode  =   "200";
+        }
+        return; // response()->json(compact('this'));
     }
 
     public function sendSMS($recipients, $message)
@@ -237,4 +271,15 @@ public function getAssetById(int $upper, int $lower){ //(Request $request){
     return $response->json();
   }
     //Blockchain ends
+/*
+    public function delete_asset_from_blockchain($id)
+    {
+        //invalidate on blockchain
+        $txnID = $this->setValidity($id, false);
+
+        //update txnID on our database
+        $asset->deletion_txn_id = $txnID;
+        $asset->save();
+    }
+*/
 }

@@ -16,12 +16,14 @@ use Illuminate\Support\Arr; //used in the show() method to add blockchain data t
 use App\Image;
 use App\Filename;
 use Storage;
+use Illuminate\Http\UploadedFile;
 
 use App\Models\User;
 use App\Models\Recovery;
 use App\Models\Transfer;
+use Carbon\Carbon;
 
-                                                        //NOTE: Change type_id in DB to category_id via migration
+
 
 class AssetController extends Controller
 {
@@ -65,15 +67,53 @@ class AssetController extends Controller
     {   
         //Query Skydah for a specific asset using either the assetid or the skydahid
         //$asset = Asset::where('skydahid', $ref)->orWhere('assetid', $ref)->first();
-        $asset = Asset::where('skydahid', $request->skydahid)->orWhere('assetid', $request->assetid)->first();
  
+        $validator = Validator::make($request->all(), [
+            'asset_id' => 'required|string|max:255'
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['errors'=>$validator->errors()->all()], 412);
+        }
+
+        $asset = Asset::where('skydahid', $request->asset_id)->orWhere('assetid', $request->asset_id)->first();
+
         if (!$asset) {
+            //notify asset owner
+
             return response()->json([
                 'success' => false,
                 'message' => 'Asset not found! Please secure your asset by registering it on Skydah.'
             ], 400);
         }
         
+        //Notify asset owner
+        $secondary_owner = auth()->user()->id;
+        if ($asset->user_id == $secondary_owner) {
+            $alert = "We noticed that you just verified your ". $asset->name ." on Skydah. If you lost this asset, kindly go to your dashboard and flag it as missing. Otherwise, someone else may have access to your Skydah credentials and your asset's ID.";
+        } else {
+            $alert = "Someone has just verified your ". $asset->name ." on Skydah. If you lost this asset, kindly request more info from your dashboard";
+        }
+
+        $title = 'Skydah Alert: Possible Recovery';
+        $recipients = $asset->user->phone;
+        
+        $recoveryData = [
+            'asset_id' => $asset->id,
+            'user_id' => $secondary_owner,    //auth()->user()->id,
+            'owner' => $asset->user_id,
+            'location' => '22 Otigba Stree, Computer Village, Ikeja, Lagos - Nigeria', //Get these from frontend
+            'lat' => '2.789005',
+            'lng' => '0.675589'
+        ];
+    
+        $recovery = Recovery::create($recoveryData);
+        
+        $this->sendSMS($recipients, $alert);
+        $this->sendEmail($asset->user->email, $title, $alert);
+        //$this->coaSendEmail($asset->user->email, $title, $asset->user->name); //works
+
         //retrieve asset from blockchain
         $bcAsset = hash("sha256", $asset->skydahid);    //whether the user specified assetid or skydahid, skydahid will be used to query the blockchain because it is most likely to always be unique
         $res = $this->getAssetBySkydahId($bcAsset, $bcAsset);   //array
@@ -88,7 +128,7 @@ class AssetController extends Controller
 
     public function update(Request $request)
     {
-//$user = $this->getTestUser();
+            //$user = $this->getTestUser();
         $id = $request->id;
         $asset = auth()->user()->assets()->find($id);
  
@@ -115,7 +155,7 @@ class AssetController extends Controller
             $newAsset = [   //local db
                 'name' => $asset->name,
                 'description' => $asset->description,
-                'category_id' => $asset->category_id,  // 'type_id' => $request->type_id //Frontend devs need to change type_id to category_id
+                'type_id' => $asset->type_id,  // 'type_id' => $request->type_id //Frontend devs need to change type_id to category_id
                 'assetid' => $asset->assetid,
                 'skydahid' => $this->generate_random_string(),            
                 'user_id' => auth()->user()->id,
@@ -128,7 +168,7 @@ class AssetController extends Controller
                 'asset_id' => $newData->id, //primary key from pgsql/mysql database
                 'asset_skydah_id' => $asset->skydahid,   //'sky-cungnuire8u8fcv8dhvd', //Asset skydah ID (12-16 char alphanumeric string)
                 'asset_type' => $asset->name, //Asset type , can be assigned from a list of constants plus asset model
-                'asset_type_id' => $asset->category_id, //Type of ID associated with asset - IMEI, serial,...
+                'asset_type_id' => $asset->type_id, //Type of ID associated with asset - IMEI, serial,...
                 'asset_hash' => $asset->assetid, //message digest for this asset. passing a message digest is also recommended
                 'asset_skydah_owner' => $asset->user_id,// Current owner of asset
                 'asset_transferable' => $asset->transferable
@@ -149,18 +189,18 @@ class AssetController extends Controller
                     'message' => 'Asset could not be updated on the blockchain!'
                 ], 500);
             }
-            /*
-            //This try --- catch is not required here. Remember to delete
-    try {
-        $user = User::findOrFail($request->input('user_id'));
-    } catch (ModelNotFoundException $exception) {
-        return back()->withError($exception->getMessage())->withInput();
-    }
+                        /*
+                        //This try --- catch is not required here. Remember to delete
+                try {
+                    $user = User::findOrFail($request->input('user_id'));
+                } catch (ModelNotFoundException $exception) {
+                    return back()->withError($exception->getMessage())->withInput();
+                }
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Asset details have been updated.'
-            ], 200);    */
+                        return response()->json([
+                            'success' => true,
+                            'message' => 'Asset details have been updated.'
+                        ], 200);    */
         } else
             return response()->json([
                 'success' => false,
@@ -211,38 +251,35 @@ class AssetController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'assetid' => 'nullable|string|max:255',
-            'category_id' => 'nullable|integer',
+            'type_id' => 'nullable|integer',
+            'file' => 'nullable|mimes:png,jpg,jpeg,csv,txt,xlsx,xls,doc,docx,ppt,pptx,mp3,mp4,pdf|max:2048',
+            'transferable' => 'required|integer|min:0|max:1'
 
         ]);
-
-        /*
-        public function uploadFile() {
-    // check if upload is valid file (example: request()->file('myFileName')->isValid() )
-
-    // calculate hash of a file
-    $fileHash = sha1_file( request()->file('myFileName')->path() );
-
-    //search for file in database and block same file upload (Files is Elequent model)
-    if( Files::where('hash', $fileHash)->firstOrNull() != null) {
-        abort(400); // abort upload
-    }
-
-    // do something with file and save hash to DB
-}
-        */
         
         if ($validator->fails())
         {
             return response()->json(['errors'=>$validator->errors()->all()], 412);
         }
 
-        $asset = Asset::where('assetid', $request->assetid)->first(); //could further filter with asset_type as additional where clause
+        if($request->file('file')) {
+            $document = $this->getDocumentHash($request->file('file'));
+            $hash = $document['hash'];
+            $filepath = $document['path'];
+
+            $asset = Asset::where('assetid', $request->assetid)->orWhere('hash', $hash)->first();
+        } else {
+            $asset = Asset::where('assetid', $request->assetid)->first();
+            $hash = $filepath = null;
+        }
+
+//could further filter with asset_type as additional where clause... but filtering by asset type will create a hack that will allow users register an already registered asset simply by changing the type
+       // $asset = Asset::where('assetid', $request->assetid)->orWhere('hash', $hash)->first(); 
         if ($asset) {
             $title = 'Skydah Alert: Possible Recovery';
             $alert = "It appears someone is trying to register your asset ( ". $asset->name ." ) on Skydah. If you lost this asset, kindly request more info from your dashboard";
             $recipients = $asset->user->phone;
             
-//            $this->getTestUser();
             $secondary_owner = auth()->user()->id;
 
             //log this in the DB so the original device owner can view it on their dashboard...
@@ -261,21 +298,22 @@ class AssetController extends Controller
 
             return response()->json([
                 'success' => false, 
-                'message' => 'An asset with this ID already exists! If you believe this is an error, Contact Us so we would help resolve the issue.'
+                'message' => 'An asset with this ID already exists! If you believe this is an error, please, press the Notify button to let us know.' //Add a notify button here for better UX
             ], 422);
         }
 
-    //    $user = $this->getTestUser();
         $data = [
             'name' => $request->name,
             'description' => $request->description,
-            'category_id' => $request->category_id,  // 'type_id' => $request->type_id //Frontend devs need to change type_id to category_id
+            'type_id' => $request->type_id,  // 'type_id' => $request->type_id //Frontend devs need to change type_id to category_id
             'assetid' => $request->assetid,
             'skydahid' => $this->generate_random_string(),            
             'user_id' => auth()->user()->id,
-            'transferable' => $request->transferable   //$request->user_id,
+            'transferable' => $request->transferable,   //$request->user_id,
+            'hash' => $hash,
+            'file' => $filepath
         ];
-//dd($data);
+
         $asset = Asset::create($data);
         
         if($asset) 
@@ -283,12 +321,13 @@ class AssetController extends Controller
             $message = "Asset successfully created!"; $code = 200;
 
             //Push to block chain
+            if( ! ($hash) || is_null($hash) ) $hash =  $data['assetid'];
             $bcData = [         
                 'asset_id' => $asset->id, //primary key from pgsql/mysql database
                 'asset_skydah_id' => $data['skydahid'],   //'sky-cungnuire8u8fcv8dhvd', //Asset skydah ID (12-16 char alphanumeric string)
                 'asset_type' => $data['name'], //Asset type , can be assigned from a list of constants plus asset model
-                'asset_type_id' => $data['category_id'], //Type of ID associated with asset - IMEI, serial,...
-                'asset_hash' => $data['assetid'], //message digest for this asset. passing a message digest is also recommended
+                'asset_type_id' => $data['type_id'], //Type of ID associated with asset - IMEI, serial,...
+                'asset_hash' => $hash, //message digest for this asset. passing a message digest is also recommended
                 'asset_skydah_owner' => $data['user_id'],// Current owner of asset
                 'asset_transferable' => $data['transferable']
             ];
@@ -462,9 +501,10 @@ class AssetController extends Controller
             return response()->json(['message' => 'Asset not found!'], 404);
         }
 
+        $newOwner = User::where('email', $request->transferTo)->get(['id', 'name']);
         $transferData = [
             'user_id' => auth()->user()->id,
-            'newOwner' => $request->transferTo,
+            'newOwner' => $newOwner[0]['id'],
             'asset_id' => $request->id,
             'transferReason' => $request->transferReason
         ];
@@ -474,31 +514,136 @@ class AssetController extends Controller
         if ( ! ($transfer) ) return response()->json(['message' => 'Transfer failed! Please try again.'], 422);
         
         //Change asset's user_id to the new owner's
-        $asset->user_id = $request->transferTo;
+        $asset->user_id = $newOwner[0]['id'];    //$request->transferTo;
         $asset->save();
         $message = 'Asset has been fully transferred! Forwarding to the blockchain...';
         
         //effect transfer on the blockchain        
-        $txnID = $this->transferAsset($request->id, $request->transferTo);
+        $txnID = $this->transferAsset($request->id, $newOwner[0]['id']); //$request->transferTo);
 
         //add transaction ID to the transferred record
         $transfer->transactionId = $txnID;
         $transfer->save();
 
-        $newOwner = User::find($request->transferTo);
+    //    $newOwner = User::find($request->transferTo);
 
-        return response()->json(['message' => 'You have successfully transferred '.$asset->name.' to '.$newOwner->name], 200);
+        return response()->json(['message' => 'You have successfully transferred '.$asset->name.' to '.$newOwner[0]['name']], 200);
     }
 
     public function flagAssetAsMissing(Request $request)
     {
-        //Display details of "recoveries" on reporting user's dashboard
+        //This flags already registered assets as missing/lost
+        //Display select details of "recoveries" on reporting user's dashboard if their flagged item is found
+        $validator = Validator::make($request->all(), [
+            'skydahid' => 'required|string|max:255',
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['errors'=>$validator->errors()->all()], 412);
+        }
+
+        $id = $request->skydahid;
+        $asset = Asset::where('skydahid', $id)->first();
+        if( ! ($asset) || is_null($asset) ) return response()->json(['Sorry! Asset not found'], 422);
+        if( !( is_null($asset->flagged_as_lost_at) ) ) return response()->json(['This asset has already been flagged as missing!'], 422);
+        $asset->flagged_as_lost_at = Carbon::now();
+        $asset->save();
+//dd($asset->type->pluck('type')[0]);
+        return response()->json([
+            "success" => true,
+            "message" => "We're sorry you lost your ".$asset->name." It has been flagged as missing! If it shows up on Skydah, you'd be notified!",
+            "data" => $asset->toArray()
+        ], 200);
+
+    }
+    
+    public function listMissingAssets()
+    {
+        //This can be modified to list missing assets based on arbitrary critera or have a new fxn... like foe the admin panel
+        $user = auth()->user();
+        $asset = Asset::where('user_id', $user->id)->whereNotNull('flagged_as_lost_at')->get();  
+        if( ! ($asset) || is_null($asset) ) return response()->json(['Hurray! You have not flagged any asset as missing.'], 201);
+        return response()->json([
+            "success" => true,
+            "data" => $asset->toArray()
+        ], 200);
 
     }
 
+    public function flagAssetAsFound(Request $request)
+    {
+        //This flags already registered assets as found/recovered
+        //Display select details of "recoveries" on reporting user's dashboard if their flagged item is found
+        $validator = Validator::make($request->all(), [
+            'skydahid' => 'required|string|max:255',
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['errors'=>$validator->errors()->all()], 412);
+        }
+
+        $id = $request->skydahid;
+        $asset = Asset::where('skydahid', $id)->first();
+        if( ! ($asset) || is_null($asset) ) return response()->json(['Sorry! Asset not found'], 422);
+        if( !( is_null($asset->flagged_as_found_at) ) ) return response()->json(['This asset has already been flagged as found!'], 422);
+        if( !( is_null($asset->flagged_as_lost_at) ) ) $asset->flagged_as_lost_at = null;
+
+        $asset->flagged_as_found_at = Carbon::now();
+        $asset->save();
+
+        return response()->json([
+            "success" => true,
+            "message" => "Whoa! we're glad you found your ".$asset->name." If Skydah helped you find it, kindly share a testimonial from your dashboard!",
+            "data" => $asset->toArray()
+        ], 200);
+
+    }
+
+    public function getDocumentHash(UploadedFile $file){
+
+        if($file) {
+            $docName = $file->getClientOriginalName();
+            $tempPath = $file->getRealPath();
+            $file->move('uploads', $docName);    //copied to uploads folder
+            $docPath = public_path('uploads'."/".$docName);    //store in db
+            $docHash = hash_file( 'sha256', $docPath ); //hash the file content
+
+            //$docHash = hash( 'sha256', $docPath ); //use this to hash the file name
+            //$doc = fopen($docPath1,"r");  use this to read the file
+            //$docName = time().'_'.$request->file('file')->getClientOriginalName(); //Create unique file names using timestamps
+
+            return ['hash' => $docHash,
+                    'path' => $docPath
+            ];
+        }
+   }
+
 }
 
-        //Use these where ONLY authenticated users are allowed to view asset
-        //$user = $this->getTestUser();
-        //$asset = auth()->user()->assets()->where('skydahid', $ref)->orWhere('assetid', $ref)->first();
-        //
+/*
+public function getDocumentHash(Request $request){
+
+        if($request->file('file')) {
+            $doc = $request->file('file');
+            $docName = $doc->getClientOriginalName();
+            $tempPath = $doc->getRealPath();
+            $doc->move('uploads', $docName);    //copied to uploads folder
+            $docPath = public_path('uploads'."/".$docName);    //store in db
+            $docHash = hash_file( 'sha256', $docPath ); //hash the file content
+
+            //$docHash = hash( 'sha256', $docPath ); //use this to hash the file name
+            //$doc = fopen($docPath1,"r");  use this to read the file
+            //$docName = time().'_'.$request->file('file')->getClientOriginalName(); //Create unique file names using timestamps
+
+           if( Asset::where('hash', $docHash)->firstOrNull() != null) {
+                //abort(400); // abort upload... file already exists
+                return response()->json([
+                    "success" => false,
+                    "message" => "This asset has already been registered. If you did not register, please notify us from your dashboard."
+                ], 422);
+            }
+        }
+   }
+*/

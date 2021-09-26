@@ -45,9 +45,9 @@ class VerificationController extends Controller
     }
     
     public function verify(Request $request)
-    {
+    {   //abort(500);
         $user = User::find($request->route('id'));
-    
+ //   try {
         if (!hash_equals((string) $request->route('hash'), sha1($user->getEmailForVerification()))) {
             //throw new AuthorizationException;
             $response = [
@@ -62,23 +62,28 @@ class VerificationController extends Controller
     
             return response()->json($response, $code);
         }
+ //   } catch (InvalidSignatureException $e) { return response()->json(['Error' => 'Your Signature is Invalid']);}
+        if (!$user->hasVerifiedEmail()) {   //abort(401);
+ //           try {
+                $user->markEmailAsVerified();
+                event(new Verified($user));
+                $response = [
+                    'message' => 'Thanks! Your email has been verified and you are being redirected',
+                    'data' => [
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'phone' => $user->phone,
+                        'address' => $user->address,
+                        'id' => $user->id
+                    ]
+                ];
+                $code = 200;
+//            } catch (InvalidSignatureException $e) {
+//                return response()->json(["Error"=>"Your activation link has expired or you have used an invalid link! Kindly request another activation link."], 422);
+                //if($e->instanceof("InvalidSignatureException")) return response()->json(["Error"=>"Your activation link has expired or you have used an invalid link! Kindly request another activation link."]);
+//            }
 
-        if (!$user->hasVerifiedEmail()) {
-            $user->markEmailAsVerified();
-            event(new Verified($user));
-            $response = [
-                'message' => 'Thanks! Your email has been verified and you are being redirected',
-                'data' => [
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'phone' => $user->phone,
-                    'address' => $user->address,
-                    'id' => $user->id
-                ]
-            ];
-            $code = 200;
-
-        } else {
+        } else {   // abort(401);
             $response = [
                 'message' => 'Your email is already verified. Thank you',
                 'data' => [

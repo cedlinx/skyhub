@@ -10,7 +10,7 @@ class Recovery extends Model
     use HasFactory;
 
     protected $fillable = [
-        'asset_id', 'user_id', 'location', 'lat', 'lng'
+        'asset_id', 'user_id', 'location', 'lat', 'lng', 'owner'
     ];
 
     public function user()

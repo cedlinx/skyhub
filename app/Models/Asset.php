@@ -12,7 +12,15 @@ class Asset extends Model
     
     protected $dates = ['deleted_at'];
     protected $fillable = [
-        'name', 'description', 'skydahid', 'assetid', 'category_id', 'user_id', 'transferable'
+        'name', 
+        'description', 
+        'skydahid', 
+        'assetid', 
+        'type_id', 
+        'user_id', 
+        'transferable', 
+        'file',
+        'hash'
     ];
     
     public function user()
@@ -22,10 +30,10 @@ class Asset extends Model
         ]);
     }
 
-    public function category()
+    public function type()
     {
-        return $this->belongsTo(Category::class)->withDefault([
-            'category' => 'Unknown',
+        return $this->belongsTo(Type::class)->withDefault([
+            'Type' => 'Unknown',
         ]);
     }
 
