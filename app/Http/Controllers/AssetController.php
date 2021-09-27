@@ -22,7 +22,7 @@ use App\Models\User;
 use App\Models\Recovery;
 use App\Models\Transfer;
 use Carbon\Carbon;
-
+use Spatie\Geocoder\Geocoder;
 
 
 class AssetController extends Controller
@@ -69,7 +69,10 @@ class AssetController extends Controller
         //$asset = Asset::where('skydahid', $ref)->orWhere('assetid', $ref)->first();
  
         $validator = Validator::make($request->all(), [
-            'asset_id' => 'required|string|max:255'
+            'asset_id' => 'required|string|max:255',
+            'lat' => 'required|numeric|between:-90.000000, 90.000000',
+            'lng' => 'required|numeric|between:-180.000000, 180.000000',
+        //    'address' => 'nullable|string|max:255'
         ]);
         
         if ($validator->fails())
@@ -103,11 +106,11 @@ class AssetController extends Controller
             'asset_id' => $asset->id,
             'user_id' => $secondary_owner,    //auth()->user()->id,
             'owner' => $asset->user_id,
-            'location' => '22 Otigba Stree, Computer Village, Ikeja, Lagos - Nigeria', //Get these from frontend
-            'lat' => '2.789005',
-            'lng' => '0.675589'
+            'lat' => $request->lat,
+            'lng' => $request->lng,
+            'location' => $this->getLocation($request->lat, $request->lng)
         ];
-    
+
         $recovery = Recovery::create($recoveryData);
         
         $this->sendSMS($recipients, $alert);
@@ -126,6 +129,7 @@ class AssetController extends Controller
         ], 200);
     }
 
+    //GPS LOCATION CURRENTLY DOES NOT CHANGE WITH UPDATES ... DB only hold initial asset registration location ... REVIEW??
     public function update(Request $request)
     {
             //$user = $this->getTestUser();
@@ -253,7 +257,10 @@ class AssetController extends Controller
             'assetid' => 'nullable|string|max:255',
             'type_id' => 'nullable|integer',
             'file' => 'nullable|mimes:png,jpg,jpeg,csv,txt,xlsx,xls,doc,docx,ppt,pptx,mp3,mp4,pdf|max:2048',
-            'transferable' => 'required|integer|min:0|max:1'
+            'transferable' => 'required|integer|min:0|max:1',
+            'lat' => 'required|numeric|between:0.000000, 90.000000',
+            'lng' => 'required|numeric|between:0.000000, 180.000000',
+    //        'address' => 'nullable|string|max:255'
 
         ]);
         
@@ -287,9 +294,9 @@ class AssetController extends Controller
             $recoveryData = [
                 'asset_id' => $asset->id,
                 'secondary_owner' => $secondary_owner,    //auth()->user()->id,
-                'location' => '22 Otigba Stree, Computer Village, Ikeja, Lagos - Nigeria', //Get these from frontend
-                'lat' => '2.789005',
-                'lng' => '0.675589'
+                'lat' => $request->lat,
+                'lng' => $request->lng,
+                'location' => $this->getLocation($request->lat, $request->lng)
             ];
             $recovery = Recovery::create($recoveryData);
 
@@ -311,7 +318,10 @@ class AssetController extends Controller
             'user_id' => auth()->user()->id,
             'transferable' => $request->transferable,   //$request->user_id,
             'hash' => $hash,
-            'file' => $filepath
+            'file' => $filepath,
+            'location' => $request->address,
+            'lat' => $request->lat,
+            'lng' => $request->lng
         ];
 
         $asset = Asset::create($data);
@@ -629,6 +639,18 @@ class AssetController extends Controller
             ];
         }
    }
+
+    public function getLocation($lat, $lng)
+    {
+        $client = new \GuzzleHttp\Client();
+        $geocoder = new Geocoder($client);
+        $geocoder->setApiKey(config('geocoder.key'));
+        //$geocoder->setCountry(config('geocoder.country', 'NG'));  //restrict to a specific country
+        //$address = $geocoder->getCoordinatesForAddress('12, Bayo Street, Egbeda Lagos');
+        $location = $geocoder->getAddressForCoordinates($lat, $lng);
+
+        return $location['formatted_address'];
+    }
 
 }
 
