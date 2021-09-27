@@ -6,6 +6,7 @@ use App\Models\Recovery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Asset;
+use Validator;
 
 class RecoveryController extends Controller
 {
@@ -25,17 +26,6 @@ class RecoveryController extends Controller
             ->get();
 
         return response()->json($recoveries, 200);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -66,19 +56,10 @@ class RecoveryController extends Controller
      * @param  \App\Models\Recovery  $recovery
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Recovery $recovery)
+    public function update(Request $request)
     {
-        //
+
+        
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Recovery  $recovery
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Recovery $recovery)
-    {
-        //
-    }
 }

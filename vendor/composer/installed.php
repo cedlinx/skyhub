@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '6423f082dfda8b57940b0578f675011383f4b5a1',
+        'reference' => 'c2ea31f65d684ff43f4643c662528730e5ba95d3',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -140,12 +140,12 @@
             'dev_requirement' => true,
         ),
         'filp/whoops' => array(
-            'pretty_version' => '2.14.1',
-            'version' => '2.14.1.0',
+            'pretty_version' => '2.14.3',
+            'version' => '2.14.3.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../filp/whoops',
             'aliases' => array(),
-            'reference' => '15ead64e9828f0fc90932114429c4f7923570cb1',
+            'reference' => '89584ce67dd32307f1063cc43846674f4679feda',
             'dev_requirement' => true,
         ),
         'firebase/php-jwt' => array(
@@ -427,7 +427,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '6423f082dfda8b57940b0578f675011383f4b5a1',
+            'reference' => 'c2ea31f65d684ff43f4643c662528730e5ba95d3',
             'dev_requirement' => false,
         ),
         'laravel/passport' => array(
@@ -512,12 +512,12 @@
             'dev_requirement' => false,
         ),
         'league/mime-type-detection' => array(
-            'pretty_version' => '1.7.0',
-            'version' => '1.7.0.0',
+            'pretty_version' => '1.8.0',
+            'version' => '1.8.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../league/mime-type-detection',
             'aliases' => array(),
-            'reference' => '3b9dff8aaf7323590c1d2e443db701eb1f9aa0d3',
+            'reference' => 'b38b25d7b372e9fddb00335400467b223349fd7e',
             'dev_requirement' => false,
         ),
         'league/oauth1-client' => array(
@@ -616,12 +616,12 @@
             'dev_requirement' => false,
         ),
         'nikic/php-parser' => array(
-            'pretty_version' => 'v4.12.0',
-            'version' => '4.12.0.0',
+            'pretty_version' => 'v4.13.0',
+            'version' => '4.13.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../nikic/php-parser',
             'aliases' => array(),
-            'reference' => '6608f01670c3cc5079e18c1dab1104e002579143',
+            'reference' => '50953a2691a922aa1769461637869a0a2faa3f53',
             'dev_requirement' => false,
         ),
         'niklasravnsborg/laravel-pdf' => array(
@@ -634,12 +634,12 @@
             'dev_requirement' => false,
         ),
         'nunomaduro/collision' => array(
-            'pretty_version' => 'v5.9.0',
-            'version' => '5.9.0.0',
+            'pretty_version' => 'v5.10.0',
+            'version' => '5.10.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../nunomaduro/collision',
             'aliases' => array(),
-            'reference' => '63456f5c3e8c4bc52bd573e5c85674d64d84fd43',
+            'reference' => '3004cfa49c022183395eabc6d0e5207dfe498d00',
             'dev_requirement' => true,
         ),
         'nyholm/psr7' => array(
@@ -805,12 +805,12 @@
             'dev_requirement' => true,
         ),
         'phpunit/phpunit' => array(
-            'pretty_version' => '9.5.9',
-            'version' => '9.5.9.0',
+            'pretty_version' => '9.5.10',
+            'version' => '9.5.10.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpunit/phpunit',
             'aliases' => array(),
-            'reference' => 'ea8c2dfb1065eb35a79b3681eee6e6fb0a6f273b',
+            'reference' => 'c814a05837f2edb0d1471d6e3f4ab3501ca3899a',
             'dev_requirement' => true,
         ),
         'psr/container' => array(
@@ -885,8 +885,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0',
-                1 => '1.0.0 || 2.0.0 || 3.0.0',
+                0 => '1.0.0 || 2.0.0 || 3.0.0',
+                1 => '1.0|2.0',
             ),
         ),
         'psr/simple-cache' => array(
@@ -932,18 +932,18 @@
             'dev_requirement' => false,
         ),
         'ramsey/uuid' => array(
-            'pretty_version' => '4.2.1',
-            'version' => '4.2.1.0',
+            'pretty_version' => '4.2.3',
+            'version' => '4.2.3.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../ramsey/uuid',
             'aliases' => array(),
-            'reference' => 'fe665a03df4f056aa65af552a96e1976df8c8dae',
+            'reference' => 'fc9bb7fb5388691fd7373cd44dcb4d63bbcf24df',
             'dev_requirement' => false,
         ),
         'rhumsaa/uuid' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '4.2.1',
+                0 => '4.2.3',
             ),
         ),
         'sebastian/cli-parser' => array(
@@ -1124,6 +1124,15 @@
             'install_path' => __DIR__ . '/../simplito/elliptic-php',
             'aliases' => array(),
             'reference' => '5cebaf29adce31a398368972a43d13def1e7ba15',
+            'dev_requirement' => false,
+        ),
+        'spatie/geocoder' => array(
+            'pretty_version' => '3.10.1',
+            'version' => '3.10.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../spatie/geocoder',
+            'aliases' => array(),
+            'reference' => '083438f249cdbfb0d7d8a9b95aa17c60a204d925',
             'dev_requirement' => false,
         ),
         'stephenhill/base58' => array(

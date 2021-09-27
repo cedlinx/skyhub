@@ -20,7 +20,10 @@ class Asset extends Model
         'user_id', 
         'transferable', 
         'file',
-        'hash'
+        'hash', 
+        'location', 
+        'lat', 
+        'lng'
     ];
     
     public function user()

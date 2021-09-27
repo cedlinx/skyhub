@@ -64,7 +64,6 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post('/find/asset', 'AssetController@show')->middleware(['sanitize', 'log.route']);  //ref is either skydahid or assetid
     //Route::get('/assets', 'AssetController@index')->name('assets.api')->middleware('verified'); //Guests should be able to verify assets, that's why this isn't in the protected route below
 
-
     //METHODS NOT ALLOWED HTTP EXCEPTION HANDLING
     Route::get('/register','Auth\ApiAuthController@noGet')->name('register.api');
     Route::get('/login', 'Auth\ApiAuthController@noGet')->name('login.api');
