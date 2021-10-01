@@ -23,7 +23,8 @@ class Asset extends Model
         'hash', 
         'location', 
         'lat', 
-        'lng'
+        'lng',
+        'sos'
     ];
     
     public function user()

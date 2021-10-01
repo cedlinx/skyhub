@@ -6213,6 +6213,79 @@
             "install-path": "../sebastian/version"
         },
         {
+            "name": "seshac/otp-generator",
+            "version": "0.0.6",
+            "version_normalized": "0.0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/seshac/otp-generator.git",
+                "reference": "ffe65b970f5fb8bf6d5d86b7f8b1a4e44efe0d7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/seshac/otp-generator/zipball/ffe65b970f5fb8bf6d5d86b7f8b1a4e44efe0d7c",
+                "reference": "ffe65b970f5fb8bf6d5d86b7f8b1a4e44efe0d7c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|7.4|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^9.3",
+                "vimeo/psalm": "^3.11|^4.3"
+            },
+            "time": "2021-01-29T04:38:32+00:00",
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Seshac\\Otp\\OtpServiceProvider"
+                    ],
+                    "aliases": {
+                        "Otp": "Seshac\\Otp\\OtpFacade"
+                    }
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Seshac\\Otp\\": "src",
+                    "Seshac\\Otp\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "sesha",
+                    "email": "seshadriece008@gmail.com",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "OTP Generator and Validator for Laravel Applications",
+            "homepage": "https://github.com/seshac/otp-generator",
+            "keywords": [
+                "laravel",
+                "otp-generator",
+                "seshac"
+            ],
+            "support": {
+                "issues": "https://github.com/seshac/otp-generator/issues",
+                "source": "https://github.com/seshac/otp-generator/tree/0.0.6"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/seshac",
+                    "type": "github"
+                }
+            ],
+            "install-path": "../seshac/otp-generator"
+        },
+        {
             "name": "setasign/fpdi",
             "version": "v2.3.6",
             "version_normalized": "2.3.6.0",

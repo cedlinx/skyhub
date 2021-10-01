@@ -23,7 +23,7 @@ use App\Models\Recovery;
 use App\Models\Transfer;
 use Carbon\Carbon;
 use Spatie\Geocoder\Geocoder;
-
+use Seshac\Otp\Otp;
 
 class AssetController extends Controller
 {
@@ -47,8 +47,10 @@ class AssetController extends Controller
 */
     public function index()
     {
+        
         //Retrieve and display all assets belonging to the logged in user
     //    $user = $this->getTestUser();
+    //$this->getOTP(auth()->user()->phone);
         $assets = auth()->user()->assets;   //->asset;
 
         //retried auth user's assets from the blockchain
@@ -67,7 +69,9 @@ class AssetController extends Controller
     {   
         //Query Skydah for a specific asset using either the assetid or the skydahid
         //$asset = Asset::where('skydahid', $ref)->orWhere('assetid', $ref)->first();
- 
+        $this->sendOTP(auth()->user()->phone);
+        
+    //    $this->verifyOTP(auth()->user()->phone, '738171');
         $validator = Validator::make($request->all(), [
             'asset_id' => 'required|string|max:255',
             'lat' => 'required|numeric|between:-90.000000, 90.000000',
@@ -132,7 +136,9 @@ class AssetController extends Controller
     //GPS LOCATION CURRENTLY DOES NOT CHANGE WITH UPDATES ... DB only hold initial asset registration location ... REVIEW??
     public function update(Request $request)
     {
-            //$user = $this->getTestUser();
+        //$user = $this->getTestUser();
+    //    $this->sendOTP(auth()->user()->phone);
+
         $id = $request->id;
         $asset = auth()->user()->assets()->find($id);
  
@@ -514,6 +520,17 @@ class AssetController extends Controller
     
     public function transfer(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'transferTo' => 'required|email',
+            'id' => 'required|integer',
+            'transferReason' => 'nullable|string|max:255',
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['errors'=>$validator->errors()->all()], 412);
+        }
+
         //Upon successful transfer, apply softdelete on the previous owner in blockchain
         $asset = auth()->user()->assets->find($request->id);
 
@@ -651,6 +668,62 @@ class AssetController extends Controller
 
         return $location['formatted_address'];
     }
+
+    public function getOTP($identifier)
+    {
+        $otp =  Otp::setValidity(15)  // otp validity time in mins
+                    ->setLength(6)  // Lenght of the generated otp
+                    ->setMaximumOtpsAllowed(6) // Number of times allowed to regenerate otps
+                    ->setOnlyDigits(true)  // generated otp contains mixed characters ex:ad2312
+                    ->setUseSameToken(false) // if you re-generate OTP, you will get same token
+                    ->generate($identifier);
+        
+        return $otp;
+    }
+
+    public function sendOTP(Request $request)
+    {
+        $identifier = $request->identifier;
+        $otp = $this->getOTP($identifier);
+        $title = 'Skydah OTP';
+        $alert = 'Your OTP is '.$otp->token. '. It will expire in 15 minutes';
+        $this->sendSMS($identifier, $alert);
+        $this->sendEmail(auth()->user()->email, $title, $alert);
+
+        if ( ! ($otp->status) )
+        return response()->json([
+            'success' => false,
+            'message' => $otp->message,
+        ], 412);
+
+        return response()->json([
+            'success' => true,
+            'OTP' => $otp->token,
+            'message' => 'An OTP has been sent your registered phone number. Please, use it to authorize this operation! It will expire in 15 minutes.'
+        ], 200);
+        
+    }
+
+    public function verifyOTP(Request $request)
+    {
+        $identifier = $request->identifier;
+        $token = $request->token;
+        $verified = Otp::setAllowedAttempts(2) // number of times they can allow to attempt with wrong token
+                    ->validate($identifier, $token);
+    
+        if ( !($verified->status) )
+        return response()->json([
+            'success' => false,
+            'message' => $verified->message,
+        ], 412);
+
+        return response()->json([
+            'success' => true,
+            'status' => 'OTP Verified!',
+            'message' => $verified->message,
+        ],200);
+    }
+
 
 }
 

@@ -76,6 +76,7 @@ class Kernel extends HttpKernel
         'agency' => \App\Http\Middleware\Agency::class,
         'individual' => \App\Http\Middleware\Individual::class,
         'enterprise' => \App\Http\Middleware\Enterprise::class,
+        'pinop' => \App\Http\Middleware\UsePin::class,
     ];
 }
 /*
