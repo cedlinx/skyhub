@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'c2ea31f65d684ff43f4643c662528730e5ba95d3',
+        'reference' => 'da41ed7aa70ddfae3aa3899de18ff8726b7c6a5e',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -427,7 +427,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'c2ea31f65d684ff43f4643c662528730e5ba95d3',
+            'reference' => 'da41ed7aa70ddfae3aa3899de18ff8726b7c6a5e',
             'dev_requirement' => false,
         ),
         'laravel/passport' => array(
@@ -1089,6 +1089,15 @@
             'aliases' => array(),
             'reference' => 'c6c1022351a901512170118436c764e473f6de8c',
             'dev_requirement' => true,
+        ),
+        'seshac/otp-generator' => array(
+            'pretty_version' => '0.0.6',
+            'version' => '0.0.6.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../seshac/otp-generator',
+            'aliases' => array(),
+            'reference' => 'ffe65b970f5fb8bf6d5d86b7f8b1a4e44efe0d7c',
+            'dev_requirement' => false,
         ),
         'setasign/fpdi' => array(
             'pretty_version' => 'v2.3.6',

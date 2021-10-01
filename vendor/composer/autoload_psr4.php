@@ -47,6 +47,8 @@ return array(
     'StephenHill\\Benchmarks\\' => array($vendorDir . '/stephenhill/base58/benchmarks'),
     'StephenHill\\' => array($vendorDir . '/stephenhill/base58/src'),
     'Spatie\\Geocoder\\' => array($vendorDir . '/spatie/geocoder/src'),
+    'Seshac\\Otp\\Database\\Factories\\' => array($vendorDir . '/seshac/otp-generator/database/factories'),
+    'Seshac\\Otp\\' => array($vendorDir . '/seshac/otp-generator/src'),
     'Ramsey\\Uuid\\' => array($vendorDir . '/ramsey/uuid/src'),
     'Ramsey\\Collection\\' => array($vendorDir . '/ramsey/collection/src'),
     'Psy\\' => array($vendorDir . '/psy/psysh/src'),

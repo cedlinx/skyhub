@@ -34,6 +34,10 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     //MUST DELETE 
     Route::get('/testing/delete/user/{email}','UserController@danger')->name('danger.api');
 
+    //OTP duplicate -- public
+    //Route::post('/send/otp', 'AssetController@sendOTP');
+    //Route::post('/validate/otp', 'AssetController@verifyOTP');
+
     // Standard Authentication
     Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api'); //APiAuthController's login fcn has been Modified to allow this work with email verification as well
     Route::post('/register','Auth\ApiAuthController@register')->name('register.api');
@@ -108,7 +112,7 @@ Route::middleware(['cors', 'json.response', 'auth:api'])->group(function () {
     //
 
     Route::prefix('asset')->middleware('log.route')->group(function () {
-        Route::post('/add', 'AssetController@add_asset');
+        Route::post('/add', 'AssetController@add_asset')->middleware('pinop');
         Route::post('/generate_company_codes', 'AssetController@generate_company_codes')->middleware(['enterprise', 'api.admin', 'api.superAdmin']);
         Route::get('/get_company_codes/{id}', 'AssetController@get_company_codes')->middleware(['enterprise', 'api.admin', 'api.superAdmin']);
         Route::post('/upload_bulk_assets', 'AssetController@upload_bulk_assets');
@@ -123,13 +127,13 @@ Route::middleware(['cors', 'json.response', 'auth:api'])->group(function () {
         
         Route::get('/list', 'AssetController@index');
         Route::post('/list', 'Auth\ApiAuthController@noPost');
-        Route::post('/modify', 'AssetController@update');
+        Route::post('/modify', 'AssetController@update')->middleware('pinop');
         Route::get('/modify', 'Auth\ApiAuthController@noGet');
         Route::post('/delete', 'AssetController@destroy');
         Route::get('/delete', 'Auth\ApiAuthController@noGet');
-        Route::post('/transfer', 'AssetController@transfer');
+        Route::post('/transfer', 'AssetController@transfer')->middleware('pinop');
         Route::get('/transfer', 'Auth\ApiAuthController@noGet');
-        Route::post('/confirm/transfer', 'AssetController@transfer');   //Owner responds YES when alerted of attempt to register asset
+        Route::post('/confirm/transfer', 'AssetController@transfer')->middleware('pinop');   //Owner responds YES when alerted of attempt to register asset
         Route::get('/confirm/transfer', 'Auth\ApiAuthController@noGet');
         Route::post('/decline/transfer', 'AssetController@transfer');   //Owner responds LOST when alerted of attempt to register asset
         Route::get('/decline/transfer', 'Auth\ApiAuthController@noGet');
@@ -153,6 +157,7 @@ Route::middleware(['cors', 'json.response', 'auth:api'])->group(function () {
         Route::get('/recoveries', 'Auth\ApiAuthController@noGet');
         Route::post('/transfers', 'TransferController@show');
         Route::get('/transfers', 'Auth\ApiAuthController@noGet');
+
         //COA routes:z
         
     });
@@ -187,6 +192,11 @@ Route::middleware(['cors', 'json.response', 'auth:api'])->group(function () {
             Route::Get('/asset/transfer/list', 'TransferController@index');
             Route::post('/asset/transfer/list', 'Auth\ApiAuthController@noPost');
         });
+         //OTP
+        Route::post('/send/otp', 'AssetController@sendOTP');
+        Route::get('/send/otp', 'Auth\ApiAuthController@noGet');
+        Route::post('/validate/otp', 'AssetController@verifyOTP');
+        Route::get('/validate/otp', 'Auth\ApiAuthController@noGet');
     });
 });
 

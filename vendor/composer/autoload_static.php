@@ -109,6 +109,8 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
             'StephenHill\\Benchmarks\\' => 23,
             'StephenHill\\' => 12,
             'Spatie\\Geocoder\\' => 16,
+            'Seshac\\Otp\\Database\\Factories\\' => 30,
+            'Seshac\\Otp\\' => 11,
         ),
         'R' => 
         array (
@@ -386,6 +388,14 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'Spatie\\Geocoder\\' => 
         array (
             0 => __DIR__ . '/..' . '/spatie/geocoder/src',
+        ),
+        'Seshac\\Otp\\Database\\Factories\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/seshac/otp-generator/database/factories',
+        ),
+        'Seshac\\Otp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/seshac/otp-generator/src',
         ),
         'Ramsey\\Uuid\\' => 
         array (
@@ -716,6 +726,7 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
+        'App\\Http\\Middleware\\UsePin' => __DIR__ . '/../..' . '/app/Http/Middleware/UsePin.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Middleware\\XssSanitizer' => __DIR__ . '/../..' . '/app/Http/Middleware/XssSanitizer.php',
         'App\\Jobs\\ExampleJob' => __DIR__ . '/../..' . '/app/Jobs/ExampleJob.php',
@@ -5143,6 +5154,10 @@ class ComposerStaticInit5c588fd79587a205dbcf85382f2a7f26
         'SebastianBergmann\\Type\\UnknownType' => __DIR__ . '/..' . '/sebastian/type/src/UnknownType.php',
         'SebastianBergmann\\Type\\VoidType' => __DIR__ . '/..' . '/sebastian/type/src/VoidType.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+        'Seshac\\Otp\\Models\\Otp' => __DIR__ . '/..' . '/seshac/otp-generator/src/Models/Otp.php',
+        'Seshac\\Otp\\Otp' => __DIR__ . '/..' . '/seshac/otp-generator/src/Otp.php',
+        'Seshac\\Otp\\OtpGenerator' => __DIR__ . '/..' . '/seshac/otp-generator/src/OtpGenerator.php',
+        'Seshac\\Otp\\OtpServiceProvider' => __DIR__ . '/..' . '/seshac/otp-generator/src/OtpServiceProvider.php',
         'Spatie\\Geocoder\\Exceptions\\CouldNotGeocode' => __DIR__ . '/..' . '/spatie/geocoder/src/Exceptions/CouldNotGeocode.php',
         'Spatie\\Geocoder\\Facades\\Geocoder' => __DIR__ . '/..' . '/spatie/geocoder/src/Facades/Geocoder.php',
         'Spatie\\Geocoder\\Geocoder' => __DIR__ . '/..' . '/spatie/geocoder/src/Geocoder.php',

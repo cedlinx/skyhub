@@ -24,7 +24,9 @@ class ApiAuthController extends Controller
             'address' => 'required|string',
             'phone' => 'required|string|min:8|max:12',
             'role' => 'nullable|integer',
-            'group_id' => 'nullable|integer'
+            'group_id' => 'nullable|integer',
+            'pin' => 'required|digits:4',
+            'sospin' => 'nullable|digits:4'
         ]);
 
         if ($validator->fails())

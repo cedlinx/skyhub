@@ -37,7 +37,9 @@ class User extends Authenticatable implements CanResetPassword, mustVerify
         'phone',
         'email_verified_at',
         'email_verified',
-        'group_id'
+        'group_id',
+        'pin',
+        'pinsos'
     ];
     
     protected $guarded = ['*'];

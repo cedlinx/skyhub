@@ -17,6 +17,7 @@
         "laravel/ui": "^3.3",
         "myxtype/eos-client": "dev-master",
         "niklasravnsborg/laravel-pdf": "^4.1",
+        "seshac/otp-generator": "^0.0.6",
         "spatie/geocoder": "^3.10"
     },
     "require-dev": {
