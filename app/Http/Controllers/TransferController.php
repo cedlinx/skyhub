@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Asset;
+use Validator;
 
 class TransferController extends Controller
 {
@@ -34,9 +36,38 @@ class TransferController extends Controller
         return response()->json($transfers, 200);
     }
 
-    public function get_transfer_history()
+    public function get_ownership_history(Request $request)
     {
-        //Build an asset's transfer history beginning from the very first owner to the current owner
+        $validator = Validator::make($request->all(), [
+            'id' => 'nullable|integer',
+            'skydahid' => 'nullable|string|max:20',
+            'assetid' => 'nullable|string|max:50'
+        ]);
+        if ( $validator->fails() ) {
+            return response()->json(['errors'=>$validator->errors()->all()], 412);
+        }
+        
+        if ( (!$request->id && !$request->skydahid && !$request->assetid ) )
+            return response()->json([
+                'message' => 'Please, provide an ID, a Skydah ID or an Asset ID!'
+            ]);
 
+        if ( $request->id ) $id = $request->id;
+        if ( $request->skydahid || $request->assetid ) {
+            $asset = Asset::where('skydahid', $request->skydahid)->orWhere('assetid', $request->assetid)->get();
+            $id  = $asset[0]->id;
+        }
+
+        $history = DB::table('assets')
+            ->leftJoin('transfers', 'assets.id', '=', 'transfers.asset_id')
+            ->leftJoin('users', 'users.id', '=', 'transfers.user_id')
+            ->leftJoin('users as newOwners', 'newOwners.id', '=', 'transfers.newOwner')
+            ->select('assets.*', 'users.name as previous-owner', 'newOwners.name as new-owner')
+            ->where('assets.id', $id)
+            ->get();
+
+        return response()->json($history, 200);
     }
+
+    
 }

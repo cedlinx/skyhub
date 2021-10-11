@@ -14,8 +14,8 @@ class AddPinToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('pin');
-            $table->integer('pinSOS');
+            $table->string('pin');
+            $table->string('pinSOS')->nullable();
         });
     }
 

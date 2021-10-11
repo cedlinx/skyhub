@@ -14,7 +14,7 @@ class AddCompanyIdToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->integer('company_id')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddCompanyIdToUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropColumn('company_id');
         });
     }
 }

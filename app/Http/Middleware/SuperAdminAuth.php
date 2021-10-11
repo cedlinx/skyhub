@@ -18,7 +18,7 @@ class SuperAdminAuth
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
-    {
+    {   
     ////    $user = User::find(2);
     ////    auth()->login($user);
         //role of -1 is admin; -2 is superadmin; 0 is normal/regular user; >0 represents various external users: agency, enterprise, etc

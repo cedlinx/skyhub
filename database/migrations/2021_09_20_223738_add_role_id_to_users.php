@@ -14,7 +14,7 @@ class AddRoleIdToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->integer('role_id')->default(0);
         });
     }
 
@@ -26,7 +26,7 @@ class AddRoleIdToUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropColumn('role_id');
         });
     }
 }

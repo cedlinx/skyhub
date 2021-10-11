@@ -83,6 +83,10 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post('/gosocial', 'Auth\VerificationController@noPost')->name('social.login');
     Route::post('/gosocial/{driver}', 'Auth\VerificationController@noPost')->name('social.oauth');
     Route::post('/gosocial/callback/{driver}', 'Auth\VerificationController@noPost')->name('social.callback');
+
+    Route::post('/asset/history', 'TransferController@get_ownership_history');
+    Route::get('/asset/history', 'Auth\ApiAuthController@noGet');
+
 });
 
 // protected routes will be placed here
@@ -104,7 +108,7 @@ Route::middleware(['cors', 'json.response', 'auth:api'])->group(function () {
     Route::post('/list/users', 'Auth\VerificationController@noPost');
 
         //Get the password reset form after the reset link is clicked
-        Route::get('/reset-password/{token}', 'Auth\ResetPasswordController@getNewPassword')->name('newpassword.api');
+    Route::get('/reset-password/{token}', 'Auth\ResetPasswordController@getNewPassword')->name('newpassword.api');
     
     //Used for Access Control --- see kernel.php for where I defined them
     //    Route::get('/assets', 'AssetController@index')->middleware('api.admin')->name('assets.api');
@@ -158,13 +162,17 @@ Route::middleware(['cors', 'json.response', 'auth:api'])->group(function () {
         Route::post('/transfers', 'TransferController@show');
         Route::get('/transfers', 'Auth\ApiAuthController@noGet');
 
-        //COA routes:z
         
+
+        //COA routes:z
     });
 
+    //Company routes ... user must be logged in to be able to add company
+    Route::post('/add/company', 'CompanyController@add_company');
+    Route::get('/add/company', 'Auth\ApiAuthController@noGet');
+    
+
     Route::middleware('log.route')->group(function () {
-        Route::get('/user/groups', 'GroupController@index');
-        Route::post('/user/groups', 'Auth\ApiAuthController@noPost');
 
         Route::prefix('email')->group(function () {
             Route::post('/send_email', 'EmailServiceController@send_email');
@@ -180,7 +188,9 @@ Route::middleware(['cors', 'json.response', 'auth:api'])->group(function () {
             Route::post('/save_payment', 'PaymentController@save_payment');
             Route::get('/save_payment', 'Auth\ApiAuthController@noGet');
         });
-        Route::middleware(['api.superAdmin', 'api.admin'])->group(function () {
+        //Route::middleware(['api.superAdmin'])->group(function () {    
+            Route::get('/user/groups', 'GroupController@index');
+            Route::post('/user/groups', 'Auth\ApiAuthController@noPost');
             Route::post('/add/user/group', 'GroupController@store');
             Route::get('/add/user/group', 'Auth\ApiAuthController@noGet');
             Route::post('/edit/user/group', 'GroupController@update');
@@ -191,14 +201,48 @@ Route::middleware(['cors', 'json.response', 'auth:api'])->group(function () {
             Route::post('/asset/recovery/list', 'Auth\ApiAuthController@noPost');
             Route::Get('/asset/transfer/list', 'TransferController@index');
             Route::post('/asset/transfer/list', 'Auth\ApiAuthController@noPost');
-        });
+            Route::get('/list/companies', 'CompanyController@index');
+            Route::post('/list/companies', 'Auth\ApiAuthController@noPost');
+                
+            Route::get('/user/roles', 'RoleController@index');
+            Route::post('/user/roles', 'Auth\ApiAuthController@noPost');
+            Route::post('/add/user/role', 'RoleController@store');
+            Route::get('/add/user/role', 'Auth\ApiAuthController@noGet');
+            Route::post('/edit/user/role', 'RoleController@update');
+            Route::get('/edit/user/role', 'Auth\ApiAuthController@noGet');
+            Route::post('/delete/user/role', 'RoleController@destroy');
+            Route::get('/delete/user/role', 'Auth\ApiAuthController@noGet');
+    //    });
          //OTP
         Route::post('/send/otp', 'AssetController@sendOTP');
         Route::get('/send/otp', 'Auth\ApiAuthController@noGet');
         Route::post('/validate/otp', 'AssetController@verifyOTP');
         Route::get('/validate/otp', 'Auth\ApiAuthController@noGet');
     });
-});
 
+    Route::prefix('corp')->middleware(['log.route', 'delegated', 'api.superAdmin'])
+            ->group(function () {
+        
+        //All company/enterprise routes will be added here
+        Route::get('/list/company/assets', 'AssetController@company_assets');
+        Route::post('/list/company/assets', 'Auth\ApiAuthController@noPost');
+
+        Route::post('/edit/company', 'CompanyController@edit_company');
+        Route::get('/edit/company', 'Auth\ApiAuthController@noGet');
+        Route::get('/view/company', 'CompanyController@index');
+        Route::post('/view/company', 'Auth\ApiAuthController@noPost');
+        Route::post('/delete/company', 'CompanyController@destroy');
+        Route::get('/delete/company', 'Auth\ApiAuthController@noGet');
+        
+        Route::post('/assign/role', 'RoleController@assign');
+        Route::get('/assign/role', 'Auth\ApiAuthController@noGet');
+        Route::post('/revoke/role', 'RoleController@revoke');
+        Route::get('/revoke/role', 'Auth\ApiAuthController@noGet');
+    });
+
+});
+////DEFAULT RESOLVER IP ADDRESSES FOR CONTABO: WHM =>HOME => NETWORKING SETUP => RESOLVER CONFIGURATION
+//161.97.189.52
+//161.97.189.51
 
 

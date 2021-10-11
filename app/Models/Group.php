@@ -12,4 +12,10 @@ class Group extends Model
     public function users() {
         return $this->hasMany(User::class);
     }
+
+    public function companies()
+    {
+        return $this->hasMany(Company::class);
+    }
+
 }
