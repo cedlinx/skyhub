@@ -15,7 +15,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups = Group::get();
+        $groups = Group::get(['id', 'name', 'description'])->take(3);    //limit the results to only the top3 as other groupd are for iternal use only
         return response()->json([
             $groups->toArray()
         ], 200);

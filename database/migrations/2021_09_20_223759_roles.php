@@ -13,7 +13,12 @@ class Roles extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('roles', function(Blueprint $table) {
+            $table->id();
+            $table->string('role')->default('Guest');
+            $table->string('description');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +28,6 @@ class Roles extends Migration
      */
     public function down()
     {
-        //
+        $table->dropIfExists('roles');
     }
 }

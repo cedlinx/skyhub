@@ -77,6 +77,8 @@ class Kernel extends HttpKernel
         'individual' => \App\Http\Middleware\Individual::class,
         'enterprise' => \App\Http\Middleware\Enterprise::class,
         'pinop' => \App\Http\Middleware\UsePin::class,
+        'delegated' => \App\Http\Middleware\Delegate::class,
+        'non.delegate' => \App\Http\Middleware\NonDelegate::class,
     ];
 }
 /*

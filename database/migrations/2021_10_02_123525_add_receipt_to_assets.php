@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Companies extends Migration
+class AddReceiptToAssets extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,9 @@ class Companies extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('assets', function (Blueprint $table) {
+            $table->string('receipt')->nullable();
+        });
     }
 
     /**
@@ -23,6 +25,11 @@ class Companies extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('assets', function (Blueprint $table) {
+            $table->dropColumn('receipt');
+        });
     }
 }
+
+
+

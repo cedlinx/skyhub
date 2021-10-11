@@ -25,4 +25,5 @@ class Devices extends Migration
     {
         //
     }
+    
 }

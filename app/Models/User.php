@@ -39,7 +39,8 @@ class User extends Authenticatable implements CanResetPassword, mustVerify
         'email_verified',
         'group_id',
         'pin',
-        'pinsos'
+        'pinsos',
+        'company_id'
     ];
     
     protected $guarded = ['*'];
@@ -81,10 +82,10 @@ class User extends Authenticatable implements CanResetPassword, mustVerify
         return $this->hasMany(Asset::class);
     }
 
-    public function type()
+    public function role()
     {
-        return $this->belongsTo(Type::class)->withDefault([
-            'type' => 'Unknown',
+        return $this->belongsTo(Role::class)->withDefault([
+            'role' => 'Guest',
         ]);
     }
 
@@ -102,6 +103,16 @@ class User extends Authenticatable implements CanResetPassword, mustVerify
         return $this->belongsTo(Group::class)->withDefault([
             'group' => 'Unknown'
         ]);
+    }
+
+    public function company() {
+        return $this->belongsTo(Company::class)->withDefault([
+            'company' => 'Not Applicable'
+        ]);
+    }
+
+    public function isDelegate() {
+        
     }
 }
 

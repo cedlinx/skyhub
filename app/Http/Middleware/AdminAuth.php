@@ -24,7 +24,7 @@ class AdminAuth
         ////$user = User::find(1);  //DELETE
         ////auth()->login($user);   //DELETE
         //if (Auth::guard('api')->check() && $request->user()->role < 0) {
-        if (Auth::guard('api')->check() && $request->user()->group->name == 'Admin') {
+        if (Auth::guard('api')->check() && ( $request->user()->group->name == 'Super Admin' || $request->user()->group->name == 'Super Admin') ) {
             return $next($request);
         } else {
             $message = ["message" => "Permission Denied"];

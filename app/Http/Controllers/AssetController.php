@@ -46,14 +46,13 @@ class AssetController extends Controller
     }
 */
     public function index()
-    {
+    {  // $res = $this->getDataScope();
+      //  dd($res);
         
         //Retrieve and display all assets belonging to the logged in user
-    //    $user = $this->getTestUser();
-    //$this->getOTP(auth()->user()->phone);
-        $assets = auth()->user()->assets;   //->asset;
+        $assets = auth()->user()->asset;
 
-        //retried auth user's assets from the blockchain
+        //retrieve auth user's assets from the blockchain
         $bcAssets = $this->getAssetByOwner(auth()->user()->id);
  
         //merge localdata and blockchain data
@@ -68,10 +67,7 @@ class AssetController extends Controller
     public function show(Request $request)
     {   
         //Query Skydah for a specific asset using either the assetid or the skydahid
-        //$asset = Asset::where('skydahid', $ref)->orWhere('assetid', $ref)->first();
-        $this->sendOTP(auth()->user()->phone);
         
-    //    $this->verifyOTP(auth()->user()->phone, '738171');
         $validator = Validator::make($request->all(), [
             'asset_id' => 'required|string|max:255',
             'lat' => 'required|numeric|between:-90.000000, 90.000000',
@@ -156,21 +152,30 @@ class AssetController extends Controller
             $updateTxn = $this->setValidity($id, false);
             $asset = $asset->fresh(); //retrieve updated data
 
+            /*  //This works well BUT I thought to place after forming newAsset 
             if ($asset->delete()) { //delete the record and recreate it... UNNECESSARY BUT blockchain recreation would have ID conflict
                 //update txnID on our database
                 $asset->deletion_txn_id = $updateTxn;
                 $asset->save();
             }
-
+*/
             $newAsset = [   //local db
                 'name' => $asset->name,
                 'description' => $asset->description,
                 'type_id' => $asset->type_id,  // 'type_id' => $request->type_id //Frontend devs need to change type_id to category_id
                 'assetid' => $asset->assetid,
                 'skydahid' => $this->generate_random_string(),            
-                'user_id' => auth()->user()->id,
+                'user_id' => $asset->user_id,
+                'company_id' => $asset->company_id,
                 'transferable' => $asset->transferable   //$request->user_id,
             ];
+
+            if ($asset->delete()) { //delete the record and recreate it... UNNECESSARY BUT blockchain recreation would have ID conflict
+                //update txnID on our database
+                $asset->deletion_txn_id = $updateTxn;
+                $asset->save();
+            }
+
             $newData = Asset::create($newAsset); //try ... catch
         
             //create a new entry on blockchain    
@@ -264,8 +269,10 @@ class AssetController extends Controller
             'type_id' => 'nullable|integer',
             'file' => 'nullable|mimes:png,jpg,jpeg,csv,txt,xlsx,xls,doc,docx,ppt,pptx,mp3,mp4,pdf|max:2048',
             'transferable' => 'required|integer|min:0|max:1',
+            'receipt' => 'nullable|mimes:png,jpg,jpeg,pdf|max:2048',
             'lat' => 'required|numeric|between:0.000000, 90.000000',
             'lng' => 'required|numeric|between:0.000000, 180.000000',
+            'company_id' => 'nullable|integer'
     //        'address' => 'nullable|string|max:255'
 
         ]);
@@ -275,11 +282,19 @@ class AssetController extends Controller
             return response()->json(['errors'=>$validator->errors()->all()], 412);
         }
 
+        $rcppath = null;    //Initialize receipt file path in case user doesn't provide a receipt
+        if($request->file('receipt')) {     //then user is providing a receipt
+            $rcpdoc = $this->getDocumentHash($request->file('receipt'));
+            $rcppath = $rcpdoc['path'];
+            //if we need the receipt hash, just use the following
+            //$rcphash = $rcpdoc['hash'];
+        }
+
         if($request->file('file')) {
             $document = $this->getDocumentHash($request->file('file'));
             $hash = $document['hash'];
             $filepath = $document['path'];
-
+            //when ADDING Assets, user cannot provide skydahid so we can only query with assetid or document hash
             $asset = Asset::where('assetid', $request->assetid)->orWhere('hash', $hash)->first();
         } else {
             $asset = Asset::where('assetid', $request->assetid)->first();
@@ -327,7 +342,9 @@ class AssetController extends Controller
             'file' => $filepath,
             'location' => $request->address,
             'lat' => $request->lat,
-            'lng' => $request->lng
+            'lng' => $request->lng,
+            'receipt' => $rcppath,
+            'company_id' => auth()->user()->company_id
         ];
 
         $asset = Asset::create($data);
@@ -724,6 +741,37 @@ class AssetController extends Controller
         ],200);
     }
 
+    public function search(Request $request)
+    {
+        $params = $request->except('_token');
+        $assets = Asset::filter($params)->get();
+
+        return response()->json([
+            'assets' => $assets
+        ]);
+    }
+
+    public function company_assets(Request $request)
+    {   //JUST TESTING own scope's FUNCTIONALITY
+    //    dd(auth()->user()->company);
+        $params = $request->except('_token');
+        $assets = Asset::own($params)->get();
+
+        return response()->json([
+            'assets' => $assets
+        ]);
+    }
+
+    public function getDataScope() {
+        //Identify and distinguish between an individual user and a company rep & retrieve corresponding assets
+        $value = is_null( auth()->user()->company_id ) ? auth()->user()->id : auth()->user()->company_id;
+        $key = is_null(auth()->user()->company_id) ? 'user_id' : 'company_id';
+
+        return [
+            'key' => $key,
+            'value' => $value
+        ];
+    }
 
 }
 
